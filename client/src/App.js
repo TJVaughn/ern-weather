@@ -9,6 +9,9 @@ function App() {
   return (
     <div className="App">
       <h1>Whether App</h1>
+      <p>
+        Find out whether you want to go outside or not
+      </p>
       <hr />
       <Weather />
       <Footer />

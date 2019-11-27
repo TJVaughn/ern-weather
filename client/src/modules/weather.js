@@ -74,7 +74,7 @@ class Weather extends Component {
     	return(
     		<div>
     			<form onSubmit={this.handleSubmit}>
-                    <label>Find your weather: </label>
+                    <label>Location: </label>
                     <input value={this.state.input} onChange={this.handleChange} />
                     <button>Get</button>
                 </form>

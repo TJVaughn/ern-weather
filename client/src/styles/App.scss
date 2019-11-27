@@ -1,5 +1,8 @@
 body {
   margin: 0 20%;
+  @media only screen and(max-width: 777px){
+    margin: 0 20px;
+  }
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 h1 {
@@ -17,7 +20,7 @@ a:visited {
 }
 .footer {
   display: block;
-  margin: 0 auto;
+  margin: 10px auto;
   // position: relative;
   // bottom: 20px;
   font-size: 1.2em;
