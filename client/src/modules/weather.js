@@ -1,27 +1,5 @@
 import React, { Component } from 'react';
 
-// const curr = data.forecast.currently;
-//                 //EASES THE ACCESSING OF DAILY DATA
-//                 const daily = data.forecast.daily;
-//                 //GRABS CURRENT DATA
-//                 currSumm.textContent = curr.summary;
-//                 currTemp.textContent = curr.temperature + 'F';
-//                 currHum.textContent = `Humidity: ${curr.humidity * 100}%`;
-//                 `Dew Point: ${curr.dewPoint}F`;
-//                 `Visibility: ${curr.visibility} miles`;
-//                 `Wind Speed: ${curr.windSpeed}mph`
-//                 `Wind Direction: ${curr.windBearing}deg`
-//                 `Wind Gust: ${curr.windGust}mph`
-//                 `Chance of Rain: ${curr.precipProbability * 100}%`
-//                 `Rain Intensity: ${curr.precipIntensity}`
-
-// const currentWeatherArray = [
-//     {
-//         label: 'Summary',
-//         value: this.state.weatherData.forecast.currently.summary
-//     }
-// ]
-
 class Weather extends Component {
     constructor(props){
         super(props);
@@ -39,21 +17,17 @@ class Weather extends Component {
         
     }
 
-    // componentDidMount(){
-    //     this.handleSubmit()
-    // }
-
     callWeatherApi = async () => {
         const input = encodeURIComponent(this.state.input)
         const response = await fetch(`/weather?address=${input}`)
         const body = await response.json();
         return body;
-        
     }
 
     handleChange(evt){
         this.setState({input: evt.target.value})
     }
+    
     handleSubmit(evt){
         evt.preventDefault();
         this.setState({switch: false})
@@ -70,6 +44,10 @@ class Weather extends Component {
         }).catch(err => console.log(err))
     }
 
+    toPercent(dec){
+        return Math.round(dec * 100);
+    }
+    
     render(){
     	return(
     		<div>
@@ -94,10 +72,10 @@ class Weather extends Component {
                                     Temp: {this.state.currently.temperature}F
                                 </p>
                                 <p>
-                                    Humidity {this.state.currently.humidity * 100}%
+                                    Humidity: {this.toPercent(this.state.currently.humidity)}%
                                 </p>
                                 <p>
-                                    Chance of Precipitation: {this.state.currently.precipProbability * 100}%
+                                    Chance of Precipitation: {this.toPercent(this.state.currently.precipProbability)}%
                                 </p>
                                 <p>
                                     Wind Speed: {this.state.currently.windSpeed}mph
@@ -125,13 +103,13 @@ class Weather extends Component {
                                     Low: {this.state.forecast.data[0].temperatureLow}F
                                 </p>
                                 <p>
-                                    Humidity {this.state.forecast.data[0].humidity * 100}%
+                                    Humidity: {this.toPercent(this.state.forecast.data[0].humidity)}%
                                 </p>
                                 <p>
-                                    Precipitation: {this.state.forecast.data[0].precipType}
+                                    {this.state.forecast.data[0].precipType}
                                 </p>
                                 <p>
-                                    Chance of Precipitation: {this.state.forecast.data[0].precipProbability * 100}%
+                                    Chance of Precipitation: {this.toPercent(this.state.forecast.data[0].precipProbability)}%
                                 </p>
                                 <p>
                                     Wind Speed: {this.state.forecast.data[0].windSpeed}mph
@@ -157,13 +135,13 @@ class Weather extends Component {
                                     Low: {this.state.forecast.data[1].temperatureLow}F
                                 </p>
                                 <p>
-                                    Humidity {this.state.forecast.data[1].humidity * 100}%
+                                    Humidity: {this.toPercent(this.state.forecast.data[1].humidity)}%
                                 </p>
                                 <p>
-                                    Precipitation: {this.state.forecast.data[1].precipType}
+                                    {this.state.forecast.data[1].precipType}
                                 </p>
                                 <p>
-                                    Chance of Precipitation: {this.state.forecast.data[1].precipProbability * 100}%
+                                    Chance of Precipitation: {this.toPercent(this.state.forecast.data[1].precipProbability)}%
                                 </p>
                                 <p>
                                     Wind Speed: {this.state.forecast.data[1].windSpeed}mph
