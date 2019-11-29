@@ -8,9 +8,9 @@ const forecast = (lat, long, name, callback) => {
     // console.log(url)
     request({ url, json: true }, (error, { body } = {}) => {
         if(error) {
-            return "Dark Sky returned an error, check yer connection"
+            callback(error, undefined)
         } else if(body.error) {
-            return "Darksky could not find weather for location"
+            callback(error, undefined)
         } else {
             const weather = {
                 data: body,

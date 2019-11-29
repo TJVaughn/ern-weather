@@ -7,9 +7,10 @@ const coordinates = (searchText, callback) => {
     // console.log(mapBoxUrl);
     request({url, json: true}, (error, { body }={}) => {
                     if(error){
-                        return "Mapbox returned an error, check yer connection"
+                        callback(error, undefined);
                     } else if(body.message || body.features.length < 1) {
-                        return "Unable to find location for that search term"
+                        console.log(body.message)
+                        callback(body.message, undefined);
                     } else {
                         // console.log("Mapbox API response")
 

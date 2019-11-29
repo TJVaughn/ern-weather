@@ -1,130 +1,195 @@
 import React, { Component } from 'react';
+import { toPercent, callWeatherAPI } from './utils'
+
+let weatherArray = []
+let curr = []
+let dayArray = []
+let alerts = []
+let alertsMap = []
 
 class Weather extends Component {
     constructor(props){
         super(props);
         this.state = {
             input: '',
-            weatherData: [],
             error: '',
-            currently: [],
-            forecast: [],
+            errorSwitch: false,
+            alertSwitch: false,
             switch: false,
-            loading: ''
+            loading: '',
+            alertContentSwitch: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        
+        this.handleAlertContent = this.handleAlertContent.bind(this);
     }
 
-    callWeatherApi = async () => {
-        const input = encodeURIComponent(this.state.input)
-        const response = await fetch(`/weather?address=${input}`)
-        const body = await response.json();
-        return body;
+    callAlertsMap(alerts){
+        return alertsMap = alerts.map(item =>
+            // Must give the items unique keys!
+            <div key={`alerts-${item.title}-${item.description}`}>
+                <h5>{item.title}</h5>
+                <p>
+                    {item.description}
+                </p>
+            </div>
+        )
     }
 
     handleChange(evt){
         this.setState({input: evt.target.value})
     }
-    
+
     handleSubmit(evt){
         evt.preventDefault();
         this.setState({switch: false})
-        this.setState({loading: '...loading'})
-        this.callWeatherApi().then((res) => {
-            // console.log(res)
-            this.setState({weatherData: res})
-            this.setState({currently: res.forecast.currently})
-            this.setState({forecast: res.forecast.daily})
+        this.setState({loading: '...getting forecast'})
+        callWeatherAPI(this.state.input).then((res) => {
+            // Set error to true ...
+            this.setState({errorSwitch: true})
+            weatherArray = res;
+            curr = weatherArray.forecast.currently;
+            dayArray = weatherArray.forecast.daily.data;
+            if(weatherArray.forecast.alerts) {
+                alerts = weatherArray.forecast.alerts;
+                if(alerts.length > 0) {
+                    this.setState({alertSwitch: true})
+                    this.callAlertsMap(alerts)
+                }
+            }
+            // Assuming all of these items are defined, the program will keep running
+            //Otherwise it will stop and error switch will remain true
+            // We call this function to now iterate over the array as it will not be empty anymore
+            console.log(alerts)
+            console.log(weatherArray)
+            // console.log(res.error)
+            this.setState({error: res.error})
+            // We will remove the loading message
+            this.setState({loading: ''})
+            // We set switch to true which will now render all the data
             this.setState({switch: true})
-            // console.log(this.state.currently)
-            console.log(this.state.forecast)
-            console.log(this.state.weatherData)
+            //Because everything has worked at this point, we will reset error switch to false
+            this.setState({errorSwitch: false})
         }).catch(err => console.log(err))
     }
 
-    toPercent(dec){
-        return Math.round(dec * 100);
+    handleAlertContent(){
+        if(!this.state.alertContentSwitch){
+            this.setState({alertContentSwitch: true})
+        } else {
+            this.setState({alertContentSwitch: false})
+        }
     }
-    
     render(){
     	return(
     		<div>
+
+                {/* FORM TO HANDLE SEARCH INPUT */}
     			<form onSubmit={this.handleSubmit}>
                     <label>Location: </label>
                     <input value={this.state.input} onChange={this.handleChange} />
                     <button>Get</button>
                 </form>
+
+
                 <div>
-                    <h2>
-                        {this.state.weatherData.name}
-                    </h2>
+                    {/* IF ERROR SWITCH IS TRUE, THE FORMER TEXT IS DISPLAYED */}
+                    {this.state.errorSwitch 
+                    ? <h3>"Sorry, check your connection or provide a valid search term"</h3>
+                    :''}
+
+
                     <div>
+                        {/* RENDERS ALL THE CONTENT IF ITS BEEN FETCHED, OR NOTHING IF NOT */}
                         {this.state.switch
                         ? <div>
-                            <h4>Currently</h4>
-                            <div className="Weather-container">
-                                <p>
-                                    {this.state.currently.summary}
-                                </p>
-                                <p>
-                                    Temp: {this.state.currently.temperature}F
-                                </p>
-                                <p>
-                                    Humidity: {this.toPercent(this.state.currently.humidity)}%
-                                </p>
-                                <p>
-                                    Chance of Precipitation: {this.toPercent(this.state.currently.precipProbability)}%
-                                </p>
-                                <p>
-                                    Wind Speed: {this.state.currently.windSpeed}mph
-                                </p>
-                                <p>
-                                    Wind Direction: from {this.state.currently.windBearing}deg
-                                </p>
-                                <p>
-                                    Wind Gust: {this.state.currently.windGust}mph
-                                </p>
-                                <p>
-                                    Visibility: {this.state.currently.visibility} miles
-                                </p>
-                                
+
+                            <h2>
+                                {weatherArray.name}
+                            </h2>
+
+                            {this.state.alertSwitch
+                            ?<div>
+                                <div className="Alert-button" onClick={this.handleAlertContent}>
+                                    Alerts!
+                                </div>
+ 
+                                {this.state.alertContentSwitch
+                                ? <div>
+                                    <h4>Alerts!:</h4>
+                                    {alertsMap}
+                                </div>
+                                :''}
                             </div>
+                            :''}
+                            
+                            
+                            
+
+                            <h4>Currently:</h4>
+                            <div className="Weather-container">
+                    <p>
+                        {curr.summary}
+                    </p>
+                    <p>
+                        Temp: {curr.temperature}F
+                    </p>
+                    <p>
+                        Humidity: {toPercent(curr.humidity)}%
+                    </p>
+                    <p>
+                        Chance of Precipitation: {toPercent(curr.precipProbability)}%
+                    </p>
+                    <p>
+                        Wind Speed: {curr.windSpeed}mph
+                    </p>
+                    <p>
+                        Wind Direction: from {curr.windBearing}deg
+                    </p>
+                    <p>
+                        Wind Gust: {curr.windGust}mph
+                    </p>
+                    <p>
+                        Visibility: {curr.visibility} miles
+                    </p>
+                    
+                </div>
+
+                            
                             <h4>Today:</h4>
                             <div className="Weather-container">
                                 <p>
-                                    {this.state.forecast.data[0].summary}
+                                    {dayArray[0].summary}
                                 </p>
                                 <p>
-                                    High: {this.state.forecast.data[0].temperatureHigh}F
+                                    High: {dayArray[0].temperatureHigh}F
                                 </p>
                                 <p>
-                                    Low: {this.state.forecast.data[0].temperatureLow}F
+                                    Low: {dayArray[0].temperatureLow}F
                                 </p>
                                 <p>
-                                    Humidity: {this.toPercent(this.state.forecast.data[0].humidity)}%
+                                    Humidity: {toPercent(dayArray[0].humidity)}%
                                 </p>
                                 <p>
-                                    {this.state.forecast.data[0].precipType}
+                                    {dayArray[0].precipType}
                                 </p>
                                 <p>
-                                    Chance of Precipitation: {this.toPercent(this.state.forecast.data[0].precipProbability)}%
+                                    Chance of Precipitation: {toPercent(dayArray[0].precipProbability)}%
                                 </p>
                                 <p>
-                                    Wind Speed: {this.state.forecast.data[0].windSpeed}mph
+                                    Wind Speed: {dayArray[0].windSpeed}mph
                                 </p>
                                 <p>
-                                    Wind Gust: {this.state.forecast.data[0].windGust}mph
+                                    Wind Gust: {dayArray[0].windGust}mph
                                 </p>
                                 <p>
-                                    Wind Direction: from {this.state.forecast.data[0].windBearing}deg
+                                    Wind Direction: from {dayArray[0].windBearing}deg
                                 </p>
                             </div>
                             
                             {/* <h3>On the Horizon</h3> */}
                             <h4>Tomorrow:</h4>
-                            <div className="Weather-container">
+                            {/* <div className="Weather-container">
                                 <p>
                                     {this.state.forecast.data[1].summary}
                                 </p>
@@ -135,13 +200,13 @@ class Weather extends Component {
                                     Low: {this.state.forecast.data[1].temperatureLow}F
                                 </p>
                                 <p>
-                                    Humidity: {this.toPercent(this.state.forecast.data[1].humidity)}%
+                                    Humidity: {toPercent(this.state.forecast.data[1].humidity)}%
                                 </p>
                                 <p>
                                     {this.state.forecast.data[1].precipType}
                                 </p>
                                 <p>
-                                    Chance of Precipitation: {this.toPercent(this.state.forecast.data[1].precipProbability)}%
+                                    Chance of Precipitation: {toPercent(this.state.forecast.data[1].precipProbability)}%
                                 </p>
                                 <p>
                                     Wind Speed: {this.state.forecast.data[1].windSpeed}mph
@@ -152,7 +217,7 @@ class Weather extends Component {
                                 <p>
                                     Wind Direction: from {this.state.forecast.data[1].windBearing}deg
                                 </p>
-                            </div>
+                            </div> */}
                             
                         </div>
                     :this.state.loading}
