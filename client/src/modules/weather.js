@@ -43,6 +43,7 @@ class Weather extends Component {
     handleSubmit(evt){
         evt.preventDefault();
         this.setState({switch: false})
+        this.setState({alertSwitch: false})
         this.setState({loading: '...getting forecast'})
         callWeatherAPI(this.state.input).then((res) => {
             // Set error to true ...
