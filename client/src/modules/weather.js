@@ -218,68 +218,7 @@ class Weather extends Component {
                 </div>
                                     {thisWeekMap}
                             
-                            {/* <h4>Today:</h4> */}
-                            {/* <div className="Weather-container">
-                                <p>
-                                    {dayArray[0].summary}
-                                </p>
-                                <p>
-                                    High: {dayArray[0].temperatureHigh}F
-                                </p>
-                                <p>
-                                    Low: {dayArray[0].temperatureLow}F
-                                </p>
-                                <p>
-                                    Humidity: {toPercent(dayArray[0].humidity)}%
-                                </p>
-                                <p>
-                                    {dayArray[0].precipType}
-                                </p>
-                                <p>
-                                    Chance of Precipitation: {toPercent(dayArray[0].precipProbability)}%
-                                </p>
-                                <p>
-                                    Wind Speed: {dayArray[0].windSpeed}mph
-                                </p>
-                                <p>
-                                    Wind Gust: {dayArray[0].windGust}mph
-                                </p>
-                                <p>
-                                    Wind Direction: from {dayArray[0].windBearing}deg
-                                </p>
-                            </div>
-                             */}
-                            {/* <h3>On the Horizon</h3> */}
-                            {/* <h4>Tomorrow:</h4> */}
-                            {/* <div className="Weather-container">
-                                <p>
-                                    {this.state.forecast.data[1].summary}
-                                </p>
-                                <p>
-                                    High: {this.state.forecast.data[1].temperatureHigh}F
-                                </p>
-                                <p>
-                                    Low: {this.state.forecast.data[1].temperatureLow}F
-                                </p>
-                                <p>
-                                    Humidity: {toPercent(this.state.forecast.data[1].humidity)}%
-                                </p>
-                                <p>
-                                    {this.state.forecast.data[1].precipType}
-                                </p>
-                                <p>
-                                    Chance of Precipitation: {toPercent(this.state.forecast.data[1].precipProbability)}%
-                                </p>
-                                <p>
-                                    Wind Speed: {this.state.forecast.data[1].windSpeed}mph
-                                </p>
-                                <p>
-                                    Wind Gust: {this.state.forecast.data[1].windGust}mph
-                                </p>
-                                <p>
-                                    Wind Direction: from {this.state.forecast.data[1].windBearing}deg
-                                </p>
-                            </div> */}
+                
                             
                         </div>
                     :this.state.loading}
@@ -292,4 +231,4 @@ class Weather extends Component {
     	);
     }
 }
-export default Weather ;
+export default Weather;
