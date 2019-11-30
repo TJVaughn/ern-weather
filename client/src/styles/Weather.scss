@@ -33,3 +33,31 @@
     cursor: pointer;
     text-align: center;
 }
+
+.Weather-hourly-data {
+    display: grid;
+    grid-template-columns: repeat(50, 23%);
+    overflow: scroll;
+    font-size: 0.9em;
+    @media only screen and(max-width: 765px){
+        grid-template-columns: repeat(50, 20%);
+    }
+    @media only screen and(max-width: 550px){
+        grid-template-columns: repeat(50, 25%);
+    }
+    @media only screen and(max-width: 340px){
+        grid-template-columns: repeat(50, 40%);
+    }
+    p {
+        margin: 0;
+        padding: 5px;
+        border: 1px solid #999;
+    }
+    .Weather-hourly-table-head {
+        position: absolute;
+        background-color: #fff;
+        p {
+            border-right: none;
+        }
+    }
+}

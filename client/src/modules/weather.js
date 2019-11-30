@@ -7,6 +7,8 @@ let dayArray = []
 let alerts = []
 let alertsMap = []
 let thisWeekMap = []
+let hourlyArray = []
+let hourlyMap = []
 
 class Weather extends Component {
     constructor(props){
@@ -59,8 +61,8 @@ class Weather extends Component {
     handleDayOfWeek(time){
         return this.getDayOfWeek(time)
     }
-    callDayMap(daily){
-        return thisWeekMap = daily.map(item => 
+    callDayMap(array){
+        return thisWeekMap = array.map(item => 
             <div key={`${item.time}-key`}>
                 <h4>{`${this.handleDayOfWeek(item.time)}:`}</h4>
                 <div className="Weather-container">
@@ -96,6 +98,44 @@ class Weather extends Component {
         )
     }
 
+    handleHourlyMap(array){
+        hourlyMap = array.map(item =>
+            <div key={`key-time-${item.time}`}>
+                <h5>
+                    {new Date(item.time * 1000).toLocaleTimeString()}
+                </h5>
+                <div className="">
+                    <p>
+                        {item.summary}
+                    </p>
+                    <p>
+                        {item.temperature}F
+                    </p>
+                    <p>
+                        {toPercent(item.humidity)}%
+                    </p>
+                    <p>
+                        {item.precipType
+                        ? item.precipType
+                        : 'none'}
+                    </p>
+                    <p>
+                        {toPercent(item.precipProbability)}%
+                    </p>
+                    <p>
+                        {item.windSpeed}mph
+                    </p>
+                    <p>
+                        {item.windGust}mph
+                    </p>
+                    <p>
+                        {item.windBearing}deg
+                    </p>
+                </div>
+            </div>
+            )
+    }
+
     handleChange(evt){
         this.setState({input: evt.target.value})
     }
@@ -111,6 +151,9 @@ class Weather extends Component {
             weatherArray = res;
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
+            hourlyArray = weatherArray.forecast.hourly.data;
+            console.log(hourlyArray)
+            this.handleHourlyMap(hourlyArray)
             this.callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
@@ -185,41 +228,69 @@ class Weather extends Component {
                             </div>
                             :''}
                             
-                            
-                            
-
                             <h4>Currently:</h4>
                             <div className="Weather-container">
-                    <p>
-                        {curr.summary}
-                    </p>
-                    <p>
-                        Temp: {curr.temperature}F
-                    </p>
-                    <p>
-                        Humidity: {toPercent(curr.humidity)}%
-                    </p>
-                    <p>
-                        Chance of Precipitation: {toPercent(curr.precipProbability)}%
-                    </p>
-                    <p>
-                        Wind Speed: {curr.windSpeed}mph
-                    </p>
-                    <p>
-                        Wind Direction: from {curr.windBearing}deg
-                    </p>
-                    <p>
-                        Wind Gust: {curr.windGust}mph
-                    </p>
-                    <p>
-                        Visibility: {curr.visibility} miles
-                    </p>
-                    
-                </div>
-                                    {thisWeekMap}
-                            
-                
-                            
+                                <p>
+                                    {curr.summary}
+                                </p>
+                                <p>
+                                    Temp: {curr.temperature}F
+                                </p>
+                                <p>
+                                    Humidity: {toPercent(curr.humidity)}%
+                                </p>
+                                <p>
+                                    Chance of Precipitation: {toPercent(curr.precipProbability)}%
+                                </p>
+                                <p>
+                                    Wind Speed: {curr.windSpeed}mph
+                                </p>
+                                <p>
+                                    Wind Direction: from {curr.windBearing}deg
+                                </p>
+                                <p>
+                                    Wind Gust: {curr.windGust}mph
+                                </p>
+                                <p>
+                                    Visibility: {curr.visibility} miles
+                                </p>   
+                            </div>
+                            <h4>
+                                Hourly:
+                            </h4>
+                            <div className="Weather-hourly-data">
+                                <div className="Weather-hourly-table-head">
+                                    <h5>Time:</h5>
+                                    <p>
+                                        Summary:
+                                    </p>
+                                    <p>
+                                        Temp:
+                                    </p>
+                                    <p>
+                                        Humidity:
+                                    </p>
+                                    <p>
+                                        Precip:
+                                    </p>
+                                    <p>
+                                        % Chance: 
+                                    </p>
+                                    <p>
+                                        Wind:
+                                    </p>
+                                    <p>
+                                        Gust:
+                                    </p>
+                                    <p>
+                                        Direction
+                                    </p>
+                                </div>
+                                {hourlyMap}
+                            </div>
+                            <h4>This Week:</h4>
+                            {thisWeekMap}
+                                
                         </div>
                     :this.state.loading}
                         
