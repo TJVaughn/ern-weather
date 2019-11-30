@@ -36,9 +36,30 @@
 
 .Weather-hourly-data {
     display: grid;
-    grid-template-columns: repeat(50, 23%);
+    grid-template-columns: 85px auto;
+    font-size: 1em;
+    @media only screen and(max-width: 765px){
+        grid-template-columns: 78px auto;
+        font-size: 0.9em;
+    }
+    @media only screen and(max-width: 400px){
+        grid-template-columns: 70px auto;
+        font-size: 0.8em;
+    }
+    p {
+        margin: 0;
+        padding: 5px;
+        border: 1px solid #999;
+    }
+}
+.Weather-hourly-table-head {
+    background-color: #fff;
+}
+.Weather-hourly-map{
+    display: grid;
+    grid-template-columns: repeat(50, 20%);
     overflow: scroll;
-    font-size: 0.9em;
+    // font-size: 0.9em;
     @media only screen and(max-width: 765px){
         grid-template-columns: repeat(50, 20%);
     }
@@ -53,11 +74,11 @@
         padding: 5px;
         border: 1px solid #999;
     }
-    .Weather-hourly-table-head {
-        position: absolute;
-        background-color: #fff;
-        p {
-            border-right: none;
-        }
-    }
+}
+.summary-icon {
+    border-radius: 50%;
+    height: 40px;
+}
+#hourly-summary{
+    padding: 16.2px 5px;
 }

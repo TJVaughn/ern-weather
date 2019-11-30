@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { toPercent, callWeatherAPI } from './utils'
+import { toPercent, callWeatherAPI } from './utils';
+import clearImg from '../images/clear.png';
+import partlyCloudyImg from '../images/partly-cloudy.png'
+import mostlyCloudyImg from '../images/mostly-cloudy.png'
+import overcastImg from '../images/overcast.png';
+
 
 let weatherArray = []
 let curr = []
@@ -98,6 +103,21 @@ class Weather extends Component {
         )
     }
 
+    handleHourlyIcon(summary){
+        let icon = summary.toLowerCase();
+        let imgSrc = ''
+        if(icon === 'clear'){
+            imgSrc = clearImg
+        } else if(icon === 'partly cloudy') {
+            imgSrc = partlyCloudyImg
+        } else if(icon === 'mostly cloudy'){
+            imgSrc = mostlyCloudyImg
+        } else {
+            imgSrc = overcastImg
+        }
+        return imgSrc;
+    }
+
     handleHourlyMap(array){
         hourlyMap = array.map(item =>
             <div key={`key-time-${item.time}`}>
@@ -106,7 +126,7 @@ class Weather extends Component {
                 </h5>
                 <div className="">
                     <p>
-                        {item.summary}
+                        <img className="summary-icon" src={this.handleHourlyIcon(item.summary)} alt={item.summary} />
                     </p>
                     <p>
                         {item.temperature}F
@@ -196,7 +216,6 @@ class Weather extends Component {
                     <button>Get</button>
                 </form>
 
-
                 <div>
                     {/* IF ERROR SWITCH IS TRUE, THE FORMER TEXT IS DISPLAYED */}
                     {this.state.errorSwitch 
@@ -258,10 +277,11 @@ class Weather extends Component {
                             <h4>
                                 Hourly:
                             </h4>
+                            
                             <div className="Weather-hourly-data">
                                 <div className="Weather-hourly-table-head">
                                     <h5>Time:</h5>
-                                    <p>
+                                    <p id="hourly-summary">
                                         Summary:
                                     </p>
                                     <p>
@@ -286,7 +306,9 @@ class Weather extends Component {
                                         Direction
                                     </p>
                                 </div>
-                                {hourlyMap}
+                                <div className="Weather-hourly-map">
+                                    {hourlyMap}
+                                </div>
                             </div>
                             <h4>This Week:</h4>
                             {thisWeekMap}
