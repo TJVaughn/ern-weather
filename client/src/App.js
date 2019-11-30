@@ -1,5 +1,5 @@
 import React from 'react';
-import Weather from './modules/Weather'
+import Weather from './modules/weather'
 import Footer from './modules/Footer'
 
 import './styles/App.scss';
