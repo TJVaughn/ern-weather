@@ -6,6 +6,7 @@ let curr = []
 let dayArray = []
 let alerts = []
 let alertsMap = []
+let thisWeekMap = []
 
 class Weather extends Component {
     constructor(props){
@@ -22,6 +23,7 @@ class Weather extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleAlertContent = this.handleAlertContent.bind(this);
+        this.handleDayOfWeek = this.handleDayOfWeek.bind(this)
     }
 
     callAlertsMap(alerts){
@@ -32,6 +34,64 @@ class Weather extends Component {
                 <p>
                     {item.description}
                 </p>
+            </div>
+        )
+    }
+    getDayOfWeek(time){
+        const value = new Date(time * 1000);
+        const dayNum = value.getDay();
+        if(dayNum === 0){
+            return "Sunday"
+        } else if(dayNum === 1) {
+            return "Monday"
+        } else if(dayNum === 2) {
+            return "Tuesday"
+        } else if(dayNum === 3) {
+            return "Wednesday"
+        } else if(dayNum === 4) {
+            return "Thursday"
+        } else if(dayNum === 5) {
+            return "Friday"
+        } else {
+            return "Saturday"
+        }
+    }
+    handleDayOfWeek(time){
+        return this.getDayOfWeek(time)
+    }
+    callDayMap(daily){
+        return thisWeekMap = daily.map(item => 
+            <div key={`${item.time}-key`}>
+                <h4>{`${this.handleDayOfWeek(item.time)}:`}</h4>
+                <div className="Weather-container">
+                    <p>
+                        {item.summary}
+                    </p>
+                    <p>
+                        High: {item.temperatureHigh}F
+                    </p>
+                    <p>
+                        Low: {item.temperatureLow}F
+                    </p>
+                    <p>
+                        Humidity: {toPercent(item.humidity)}%
+                    </p>
+                    <p>
+                        {item.precipType}
+                    </p>
+                    <p>
+                        Chance of Precipitation: {toPercent(item.precipProbability)}%
+                    </p>
+                    <p>
+                        Wind Speed: {item.windSpeed}mph
+                    </p>
+                    <p>
+                        Wind Gust: {item.windGust}mph
+                    </p>
+                    <p>
+                        Wind Direction: from {item.windBearing}deg
+                    </p>
+                </div>
             </div>
         )
     }
@@ -51,6 +111,7 @@ class Weather extends Component {
             weatherArray = res;
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
+            this.callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
                 if(alerts.length > 0) {
@@ -58,10 +119,10 @@ class Weather extends Component {
                     this.callAlertsMap(alerts)
                 }
             }
+
             // Assuming all of these items are defined, the program will keep running
             //Otherwise it will stop and error switch will remain true
             // We call this function to now iterate over the array as it will not be empty anymore
-            console.log(alerts)
             console.log(weatherArray)
             // console.log(res.error)
             this.setState({error: res.error})
@@ -96,12 +157,12 @@ class Weather extends Component {
                 <div>
                     {/* IF ERROR SWITCH IS TRUE, THE FORMER TEXT IS DISPLAYED */}
                     {this.state.errorSwitch 
-                    ? <h3>"Sorry, check your connection or provide a valid search term"</h3>
+                    ? <h4>"Sorry, check your connection or provide a valid search term"</h4>
                     :''}
 
 
                     <div>
-                        {/* RENDERS ALL THE CONTENT IF ITS BEEN FETCHED, OR NOTHING IF NOT */}
+                        {/* RENDERS ALL THE CONTENT IF ITS BEEN FETCHED, OR loading state */}
                         {this.state.switch
                         ? <div>
 
@@ -117,7 +178,7 @@ class Weather extends Component {
  
                                 {this.state.alertContentSwitch
                                 ? <div>
-                                    <h4>Alerts!:</h4>
+                                    <h4>Alerts:</h4>
                                     {alertsMap}
                                 </div>
                                 :''}
@@ -155,10 +216,10 @@ class Weather extends Component {
                     </p>
                     
                 </div>
-
+                                    {thisWeekMap}
                             
-                            <h4>Today:</h4>
-                            <div className="Weather-container">
+                            {/* <h4>Today:</h4> */}
+                            {/* <div className="Weather-container">
                                 <p>
                                     {dayArray[0].summary}
                                 </p>
@@ -187,9 +248,9 @@ class Weather extends Component {
                                     Wind Direction: from {dayArray[0].windBearing}deg
                                 </p>
                             </div>
-                            
+                             */}
                             {/* <h3>On the Horizon</h3> */}
-                            <h4>Tomorrow:</h4>
+                            {/* <h4>Tomorrow:</h4> */}
                             {/* <div className="Weather-container">
                                 <p>
                                     {this.state.forecast.data[1].summary}
