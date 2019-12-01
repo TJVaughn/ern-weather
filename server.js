@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     `I received your POST request. This is what you sent me: ${req.body.post}`,
 //   );
 // });
-
 app.get('/weather', (req, res) => {
     if(!req.query.address){
         return res.send({
@@ -56,6 +55,7 @@ if (process.env.NODE_ENV === 'production') {
       
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
+        console.log(req.ip)
       res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
   }

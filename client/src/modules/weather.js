@@ -120,16 +120,17 @@ class Weather extends Component {
 
     handleHourlyMap(array){
         hourlyMap = array.map(item =>
-            <div key={`key-time-${item.time}`}>
+            <div className="Hourly-map" key={`key-time-${item.time}`}>
                 <h5>
-                    {new Date(item.time * 1000).toLocaleTimeString()}
+                    {new Date(item.time * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
                 </h5>
-                <div className="">
-                    <p>
-                        <img className="summary-icon" src={this.handleHourlyIcon(item.summary)} alt={item.summary} />
+                
+                    <p className="hourly-item-summary">
+                        {item.summary}
                     </p>
+                    <img className="Hourly-summary-icon" src={this.handleHourlyIcon(item.summary)} alt={item.summary} />
                     <p>
-                        {item.temperature}F
+                        {Math.round(item.temperature)}F
                     </p>
                     <p>
                         {toPercent(item.humidity)}%
@@ -143,15 +144,14 @@ class Weather extends Component {
                         {toPercent(item.precipProbability)}%
                     </p>
                     <p>
-                        {item.windSpeed}mph
+                        {Math.round(item.windSpeed)}
                     </p>
                     <p>
-                        {item.windGust}mph
+                        {Math.round(item.windGust)}
                     </p>
                     <p>
-                        {item.windBearing}deg
+                        {Math.round(item.windBearing)}
                     </p>
-                </div>
             </div>
             )
     }
@@ -281,11 +281,14 @@ class Weather extends Component {
                             <div className="Weather-hourly-data">
                                 <div className="Weather-hourly-table-head">
                                     <h5>Time:</h5>
-                                    <p id="hourly-summary">
+                                    <p>
+
+                                    </p>
+                                    <p>
                                         Summary:
                                     </p>
                                     <p>
-                                        Temp:
+                                        Temp(deg):
                                     </p>
                                     <p>
                                         Humidity:
@@ -297,13 +300,13 @@ class Weather extends Component {
                                         % Chance: 
                                     </p>
                                     <p>
-                                        Wind:
+                                        Wind(mph):
                                     </p>
                                     <p>
-                                        Gust:
+                                        Gust(mph):
                                     </p>
                                     <p>
-                                        Direction
+                                        Direction(deg):
                                     </p>
                                 </div>
                                 <div className="Weather-hourly-map">
