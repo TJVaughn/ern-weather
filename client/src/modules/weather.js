@@ -14,6 +14,7 @@ let alertsMap = []
 let thisWeekMap = []
 let hourlyArray = []
 let hourlyMap = []
+let today = []
 
 class Weather extends Component {
     constructor(props){
@@ -67,37 +68,79 @@ class Weather extends Component {
         return this.getDayOfWeek(time)
     }
     callDayMap(array){
+        // console.log(array)
         return thisWeekMap = array.map(item => 
             <div key={`${item.time}-key`}>
                 <h4>{`${this.handleDayOfWeek(item.time)}:`}</h4>
-                <div className="Weather-container">
+                <p className="align-center">
+                    {item.summary}
+                </p>
+                <div className="Weather-today-outer">
+                <div>
+                    <h5>Temperature: F</h5>
                     <p>
-                        {item.summary}
+                        High: {Math.round(item.temperatureHigh)}&#176;
                     </p>
                     <p>
-                        High: {item.temperatureHigh}F
+                        Low: {Math.round(item.temperatureLow)}&#176;
+                    </p>
+                </div>
+                <div>
+                    
+                    <h5>Sun:</h5>
+            
+                    <p>
+                        Sunrise: {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
                     </p>
                     <p>
-                        Low: {item.temperatureLow}F
+                        Sunset: {new Date(item.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
                     </p>
+                </div>
+                
+                
+                <div>
+                    <h5>Precipitation:</h5>
+                    <p>
+                        Type: {item.precipType
+                        ? item.precipType
+                        : 'none'}
+                    </p>
+                    <p>
+                        Chance: {toPercent(item.precipProbability)}%
+                    </p>
+                </div>
+                
+                <div>
+                    <h5>Wind: MPH</h5>
+                    <p>
+                        Speed: {item.windSpeed.toFixed(1)}
+                    </p>
+                    <p>
+                        Gust: {item.windGust.toFixed(1)}
+                    </p>
+                    <p>
+                        Direction: {item.windBearing}&#176;
+                    </p>
+                </div>
+                <div>
+                    <h5>Other:</h5>
+                    <p></p>
+                    <p>
+                        Cloud Cover: {toPercent(item.cloudCover)}%
+                    </p>
+                    <p>
+                        Pressure: {item.pressure}
+                    </p>
+                </div>
+                <div>
                     <p>
                         Humidity: {toPercent(item.humidity)}%
                     </p>
                     <p>
-                        {item.precipType}
+                        Dew Point: {item.dewPoint.toFixed(1)}&#176;F
                     </p>
-                    <p>
-                        Chance of Precipitation: {toPercent(item.precipProbability)}%
-                    </p>
-                    <p>
-                        Wind Speed: {item.windSpeed}mph
-                    </p>
-                    <p>
-                        Wind Gust: {item.windGust}mph
-                    </p>
-                    <p>
-                        Wind Direction: from {item.windBearing}deg
-                    </p>
+                </div>
+                    
                 </div>
             </div>
         )
@@ -172,8 +215,10 @@ class Weather extends Component {
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
-            console.log(hourlyArray)
+            // console.log(hourlyArray)
             this.handleHourlyMap(hourlyArray)
+            today = dayArray.shift()
+            console.log(today)
             this.callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
@@ -186,7 +231,7 @@ class Weather extends Component {
             // Assuming all of these items are defined, the program will keep running
             //Otherwise it will stop and error switch will remain true
             // We call this function to now iterate over the array as it will not be empty anymore
-            console.log(weatherArray)
+            // console.log(weatherArray)
             // console.log(res.error)
             this.setState({error: res.error})
             // We will remove the loading message
@@ -205,6 +250,45 @@ class Weather extends Component {
             this.setState({alertContentSwitch: false})
         }
     }
+    componentDidMount(){
+        this.setState({switch: false})
+        this.setState({alertSwitch: false})
+        this.setState({loading: '...getting forecast'})
+        callWeatherAPI('Casa Grande, AZ').then((res) => {
+            // Set error to true ...
+            this.setState({errorSwitch: true})
+            weatherArray = res;
+            curr = weatherArray.forecast.currently;
+            dayArray = weatherArray.forecast.daily.data;
+            hourlyArray = weatherArray.forecast.hourly.data;
+            // console.log(hourlyArray)
+            this.handleHourlyMap(hourlyArray)
+            today = dayArray.shift()
+            console.log(today)
+            this.callDayMap(dayArray);
+            if(weatherArray.forecast.alerts) {
+                alerts = weatherArray.forecast.alerts;
+                if(alerts.length > 0) {
+                    this.setState({alertSwitch: true})
+                    this.callAlertsMap(alerts)
+                }
+            }
+
+            // Assuming all of these items are defined, the program will keep running
+            //Otherwise it will stop and error switch will remain true
+            // We call this function to now iterate over the array as it will not be empty anymore
+            // console.log(weatherArray)
+            // console.log(res.error)
+            this.setState({error: res.error})
+            // We will remove the loading message
+            this.setState({loading: ''})
+            // We set switch to true which will now render all the data
+            this.setState({switch: true})
+            //Because everything has worked at this point, we will reset error switch to false
+            this.setState({errorSwitch: false})
+        }).catch(err => console.log(err))
+    }
+
     render(){
     	return(
     		<div>
@@ -247,36 +331,82 @@ class Weather extends Component {
                             </div>
                             :''}
                             
-                            <h4>Currently:</h4>
-                            <div className="Weather-container">
-                                <p>
-                                    {curr.summary}
-                                </p>
-                                <p>
-                                    Temp: {curr.temperature}F
-                                </p>
-                                <p>
-                                    Humidity: {toPercent(curr.humidity)}%
-                                </p>
-                                <p>
-                                    Chance of Precipitation: {toPercent(curr.precipProbability)}%
-                                </p>
-                                <p>
-                                    Wind Speed: {curr.windSpeed}mph
-                                </p>
-                                <p>
-                                    Wind Direction: from {curr.windBearing}deg
-                                </p>
-                                <p>
-                                    Wind Gust: {curr.windGust}mph
-                                </p>
-                                <p>
-                                    Visibility: {curr.visibility} miles
-                                </p>   
+                            <h3 className="align-center">{today.summary}</h3>
+                            <p>
+                                
+                            </p>
+                            <div className="Weather-today-outer">
+                                
+                                <div>
+                                    <h5>Temperature: F</h5>
+                                    <p>
+                                        Current: {Math.round(curr.temperature)}&#176;
+                                    </p>
+                                    <p>
+                                        Feels Like: {Math.round(curr.apparentTemperature)}&#176;
+                                    </p>
+                                    <p>
+                                        High: {Math.round(today.temperatureHigh)}&#176;
+                                    </p>
+                                    <p>
+                                        Low: {Math.round(today.temperatureLow)}&#176;
+                                    </p>
+                                </div>
+                                
+                                <div>
+                                    <h5>Precipitation:</h5>
+                                    <p>
+                                        Type: {today.precipType
+                                        ? today.precipType
+                                        : 'none'}
+                                    </p>
+                                    <p>
+                                        Chance: {toPercent(today.precipProbability)}%
+                                    </p>
+                                </div>
+                                <div>
+                                    <h5>Sun:</h5>
+                                    <p>
+                                        Sunrise: {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                    </p>
+                                    <p>
+                                        Sunset: {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                    </p>
+                                </div>
+                                <div>
+                                    <h5>Wind: MPH</h5>
+                                    <p>
+                                        Speed: {today.windSpeed.toFixed(1)}
+                                    </p>
+                                    <p>
+                                        Gust: {today.windGust.toFixed(1)}
+                                    </p>
+                                    <p>
+                                        Direction: {today.windBearing}&#176;
+                                    </p>
+                                </div>
+                                <div>
+                                    <h5>Other:</h5>
+                                    <p>
+                                        Cloud Cover: {toPercent(today.cloudCover)}%
+                                    </p>
+                                    <p>
+                                        Pressure: {today.pressure}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        Humidity: {toPercent(today.humidity)}%
+                                    </p>
+                                    <p>
+                                        Dew Point: {today.dewPoint.toFixed(1)}&#176;F
+                                    </p>
+                                </div>
+                                    
                             </div>
-                            <h4>
+                            <h3 className="align-center">
                                 Hourly:
-                            </h4>
+                            </h3>
                             
                             <div className="Weather-hourly-data">
                                 <div className="Weather-hourly-table-head">
@@ -313,7 +443,7 @@ class Weather extends Component {
                                     {hourlyMap}
                                 </div>
                             </div>
-                            <h4>This Week:</h4>
+                            <h3 className="align-center">This Week:</h3>
                             {thisWeekMap}
                                 
                         </div>

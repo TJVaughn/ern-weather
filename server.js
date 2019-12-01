@@ -21,6 +21,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //     `I received your POST request. This is what you sent me: ${req.body.post}`,
 //   );
 // });
+
+app.get('/user', (req, res) => {
+    return res.send({
+        userIP: req.connection.remoteAddress
+    })
+})
+
 app.get('/weather', (req, res) => {
     if(!req.query.address){
         return res.send({
