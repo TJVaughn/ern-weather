@@ -4,9 +4,9 @@ import {callAlertsMap, alertsMap} from './Alerts';
 import {callDayMap, thisWeekMap} from './CallDayMap';
 import {handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
-import ReactGa from 'react-ga';
+import ReactGA from 'react-ga';
 
-ReactGa.initialize('UA-136509113-9');
+ReactGA.initialize('UA-136509113-9');
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 let weatherArray = []
