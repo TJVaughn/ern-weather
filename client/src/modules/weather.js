@@ -5,16 +5,12 @@ import {callDayMap, thisWeekMap} from './CallDayMap';
 import {handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
 
-// import { searchCookie } from './cookies'
-// console.log(searchCookie)
-
 let weatherArray = []
 let curr = []
 let dayArray = []
 let alerts = []
 
 let hourlyArray = []
-// let hourlyMap = []
 let today = []
 let userSearch = ''
 
@@ -81,7 +77,7 @@ class Weather extends Component {
         }
     }
     componentDidMount(){
-        userSearch = getSearchCookie().join('')
+        userSearch = getSearchCookie('search')
         if(userSearch === '') {
             return '';
         }
