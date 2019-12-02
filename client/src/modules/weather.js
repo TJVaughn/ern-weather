@@ -4,6 +4,10 @@ import {callAlertsMap, alertsMap} from './Alerts';
 import {callDayMap, thisWeekMap} from './CallDayMap';
 import {handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
+import ReactGa from 'react-ga';
+
+ReactGa.initialize('UA-136509113-9');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 let weatherArray = []
 let curr = []
@@ -65,7 +69,7 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
-            setSearchCookie(this.state.input)
+            setSearchCookie("search", this.state.input, 30)
         }).catch(err => console.log(err))
     }
 

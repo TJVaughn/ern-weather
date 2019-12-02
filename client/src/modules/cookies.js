@@ -1,7 +1,12 @@
 let userSearch = ''
 
-const setSearchCookie = (input) => {
-    userSearch = document.cookie = "path=/; expires=365 search=" + input + ';'
+const setSearchCookie = (name, input, days) => {
+    // userSearch = document.cookie = "path=/; expires=365 search=" + input + ';'
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 1000 * 60 * 60 * 24));
+    let expires = date.toUTCString();
+    document.cookie = `${name}=${input};expires=${expires};path=/;`
+    console.log(document.cookie);
 }
 const getSearchCookie = (cname) => {
     var name = cname + "=";
@@ -12,6 +17,7 @@ const getSearchCookie = (cname) => {
         c = c.substring(1);
       }
       if (c.indexOf(name) === 0) {
+        console.log(document.cookie);
         return c.substring(name.length, c.length);
       }
     }
