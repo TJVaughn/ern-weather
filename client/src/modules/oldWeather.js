@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { toPercent, callWeatherAPI } from './utils';
-import {callAlertsMap, alertsMap} from './Alerts';
-import {callDayMap, thisWeekMap} from './CallDayMap';
-import {handleHourlyMap, hourlyMap } from './HourlyMap';
-import { setSearchCookie, getSearchCookie } from './cookies'
+import clearImg from '../images/clear.png';
+import partlyCloudyImg from '../images/partly-cloudy.png'
+import mostlyCloudyImg from '../images/mostly-cloudy.png'
+import overcastImg from '../images/overcast.png';
 
 // import { searchCookie } from './cookies'
 // console.log(searchCookie)
+
 
 let weatherArray = []
 let curr = []
 let dayArray = []
 let alerts = []
-
+let alertsMap = []
+let thisWeekMap = []
 let hourlyArray = []
-// let hourlyMap = []
+let hourlyMap = []
 let today = []
 let userSearch = ''
 
@@ -33,7 +35,178 @@ class Weather extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleAlertContent = this.handleAlertContent.bind(this);
-        // this.handleDayOfWeek = this.handleDayOfWeek.bind(this)
+        this.handleDayOfWeek = this.handleDayOfWeek.bind(this)
+    }
+
+    callAlertsMap(alerts){
+        return alertsMap = alerts.map(item =>
+            // Must give the items unique keys!
+            <div key={`alerts-${item.title}-${item.description}`}>
+                <h5>{item.title}</h5>
+                <p>
+                    {item.description}
+                </p>
+            </div>
+        )
+    }
+    getDayOfWeek(time){
+        const value = new Date(time * 1000);
+        const dayNum = value.getDay();
+        if(dayNum === 0){
+            return "Sunday"
+        } else if(dayNum === 1) {
+            return "Monday"
+        } else if(dayNum === 2) {
+            return "Tuesday"
+        } else if(dayNum === 3) {
+            return "Wednesday"
+        } else if(dayNum === 4) {
+            return "Thursday"
+        } else if(dayNum === 5) {
+            return "Friday"
+        } else {
+            return "Saturday"
+        }
+    }
+    handleDayOfWeek(time){
+        return this.getDayOfWeek(time)
+    }
+    callDayMap(array){
+        // console.log(array)
+        return thisWeekMap = array.map(item => 
+            <div key={`${item.time}-key`}>
+                <h4>{`${this.handleDayOfWeek(item.time)}:`}</h4>
+                <p className="align-center">
+                    {item.summary}
+                </p>
+                <div className="Weather-today-outer">
+                <div>
+                    <h5>Temperature: F</h5>
+                    <p>
+                        High: {Math.round(item.temperatureHigh)}&#176;
+                    </p>
+                    <p>
+                        Low: {Math.round(item.temperatureLow)}&#176;
+                    </p>
+                </div>
+                <div>
+                    
+                    <h5>Sun:</h5>
+            
+                    <p>
+                        Sunrise: {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                    </p>
+                    <p>
+                        Sunset: {new Date(item.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                    </p>
+                </div>
+                
+                
+                <div>
+                    <h5>Precipitation:</h5>
+                    <p>
+                        Type: {item.precipType
+                        ? item.precipType
+                        : 'none'}
+                    </p>
+                    <p>
+                        Chance: {toPercent(item.precipProbability)}%
+                    </p>
+                </div>
+                
+                <div>
+                    <h5>Wind: MPH</h5>
+                    <p>
+                        Speed: {item.windSpeed.toFixed(1)}
+                    </p>
+                    <p>
+                        Gust: {item.windGust.toFixed(1)}
+                    </p>
+                    <p>
+                        Direction: {item.windBearing}&#176;
+                    </p>
+                </div>
+                <div>
+                    <h5>Other:</h5>
+                    <p></p>
+                    <p>
+                        Cloud Cover: {toPercent(item.cloudCover)}%
+                    </p>
+                    <p>
+                        Pressure: {item.pressure}
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        Humidity: {toPercent(item.humidity)}%
+                    </p>
+                    <p>
+                        Dew Point: {item.dewPoint.toFixed(1)}&#176;F
+                    </p>
+                </div>
+                    
+                </div>
+            </div>
+        )
+    }
+
+    handleHourlyIcon(summary){
+        let icon = summary.toLowerCase();
+        let imgSrc = ''
+        if(icon === 'clear'){
+            imgSrc = clearImg
+        } else if(icon === 'partly cloudy') {
+            imgSrc = partlyCloudyImg
+        } else if(icon === 'mostly cloudy'){
+            imgSrc = mostlyCloudyImg
+        } else {
+            imgSrc = overcastImg
+        }
+        return imgSrc;
+    }
+
+    handleHourlyMap(array){
+        hourlyMap = array.map(item =>
+            <div className="Hourly-map" key={`key-time-${item.time}`}>
+                <h5>
+                    {new Date(item.time * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                </h5>
+                
+                    <p className="hourly-item-summary">
+                        {item.summary}
+                    </p>
+                    <img className="Hourly-summary-icon" src={this.handleHourlyIcon(item.summary)} alt={item.summary} />
+                    <p>
+                        {Math.round(item.temperature)}F
+                    </p>
+                    <p>
+                        {toPercent(item.humidity)}%
+                    </p>
+                    <p>
+                        {item.precipType
+                        ? item.precipType
+                        : 'none'}
+                    </p>
+                    <p>
+                        {toPercent(item.precipProbability)}%
+                    </p>
+                    <p>
+                        {Math.round(item.windSpeed)}
+                    </p>
+                    <p>
+                        {Math.round(item.windGust)}
+                    </p>
+                    <p>
+                        {Math.round(item.windBearing)}
+                    </p>
+            </div>
+            )
+    }
+
+    setSearchCookie(input){
+        let search  = document.cookie = "path=/;search=" + input + ';'
+        console.log(search.split('').splice(14));
+        return userSearch = search.split('').splice(14);
     }
 
     handleChange(evt){
@@ -52,16 +225,24 @@ class Weather extends Component {
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
-            handleHourlyMap(hourlyArray)
+            // console.log(hourlyArray)
+            this.handleHourlyMap(hourlyArray)
             today = dayArray.shift()
-            callDayMap(dayArray);
+            console.log(today)
+            this.callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
                 if(alerts.length > 0) {
                     this.setState({alertSwitch: true})
-                    callAlertsMap(alerts)
+                    this.callAlertsMap(alerts)
                 }
             }
+
+            // Assuming all of these items are defined, the program will keep running
+            //Otherwise it will stop and error switch will remain true
+            // We call this function to now iterate over the array as it will not be empty anymore
+            // console.log(weatherArray)
+            // console.log(res.error)
             this.setState({error: res.error})
             // We will remove the loading message
             this.setState({loading: ''})
@@ -69,7 +250,7 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
-            setSearchCookie(this.state.input)
+            this.setSearchCookie(this.state.input)
         }).catch(err => console.log(err))
     }
 
@@ -81,7 +262,6 @@ class Weather extends Component {
         }
     }
     componentDidMount(){
-        userSearch = getSearchCookie().join('')
         if(userSearch === '') {
             return '';
         }
@@ -96,15 +276,15 @@ class Weather extends Component {
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
             // console.log(hourlyArray)
-            handleHourlyMap(hourlyArray)
+            this.handleHourlyMap(hourlyArray)
             today = dayArray.shift()
             console.log(today)
-            callDayMap(dayArray);
+            this.callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
                 if(alerts.length > 0) {
                     this.setState({alertSwitch: true})
-                    callAlertsMap(alerts)
+                    this.callAlertsMap(alerts)
                 }
             }
 
