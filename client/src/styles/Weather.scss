@@ -68,7 +68,7 @@
         grid-template-columns: repeat(50, 17%);
         grid-template-rows: 100%;
         overflow: scroll;
-        height: 400px;
+        height: 410px;
         // font-size: 0.9em;
         @media only screen and(max-width: 765px){
             grid-template-columns: repeat(50, 20%);
@@ -103,11 +103,54 @@
 
 .Weather-today-outer {
     display: grid;
-    grid-template-columns: repeat(3, 33.3%);
+    grid-template-columns: repeat(5, 20%);
+    border: 1px solid #122bd8;
+    border-radius: 5px;
+    box-shadow: #122bd8 4px 4px 4px;
+    text-align: center;
     div {
         padding: 0 10px;
+        // border: 1px solid #122bd8;
+    }
+    .sub-item-desc {
+        font-size: 0.8em;
     }
     @media only screen and(max-width: 550px){
-        grid-template-columns: repeat(2, 50%);
+        // grid-template-columns: repeat(3, 33.33%);
+        div {
+            padding: 2px;
+        }
+    }
+}
+
+.Loading {
+    font-size: 1.2em;
+    text-align: center;
+    margin: 15px;
+
+}
+.This-week-map-container {
+    overflow: scroll;
+    display: grid;
+    grid-template-columns: repeat(7, 85%);
+    .sub-item-desc {
+        font-size: 0.8em;
+    }
+    @media only screen and(max-width: 550px){
+        grid-template-columns: repeat(7, 98%);
+    }
+    .This-week-map {
+        border: 1px solid #122bd8;
+        border-radius: 5px;
+        box-shadow: #122bd8 4px 4px 4px;
+        text-align: center;
+        margin: 10px 20px;
+        @media only screen and(max-width: 550px){
+            margin: 10px 5px;
+        }
+        .This-week-map-inner {
+            display: grid;
+            grid-template-columns: repeat(5, 20%);
+        }
     }
 }

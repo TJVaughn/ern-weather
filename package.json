@@ -17,5 +17,9 @@
   },
   "devDependencies": {
     "concurrently": "^4.0.1"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/TJVaughn/ern-weather.git",
+  "author": "Trevor <hauck.trevor@gmail.com>",
+  "license": "MIT"
 }

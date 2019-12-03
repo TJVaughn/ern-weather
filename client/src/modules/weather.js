@@ -4,16 +4,15 @@ import {callAlertsMap, alertsMap} from './Alerts';
 import {callDayMap, thisWeekMap} from './CallDayMap';
 import {handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
-import ReactGA from 'react-ga';
+// import ReactGA from 'react-ga';
 
-ReactGA.initialize('UA-136509113-9');
-ReactGA.pageview(window.location.pathname + window.location.search);
+// ReactGA.initialize('UA-136509113-9');
+// ReactGA.pageview(window.location.pathname + window.location.search);
 
 let weatherArray = []
 let curr = []
 let dayArray = []
 let alerts = []
-
 let hourlyArray = []
 let today = []
 let userSearch = ''
@@ -172,68 +171,82 @@ class Weather extends Component {
                             <div className="Weather-today-outer">
                                 
                                 <div>
-                                    <h5>Temperature: F</h5>
+                                    <h5>Temp: F</h5>
                                     <p>
-                                        Current: {Math.round(curr.temperature)}&#176;
+                                        {Math.round(curr.temperature)}&#176;
+                                        <br /><span className="sub-item-desc">Current</span>
                                     </p>
                                     <p>
-                                        Feels Like: {Math.round(curr.apparentTemperature)}&#176;
+                                        {Math.round(curr.apparentTemperature)}&#176;
+                                        <br /><span className="sub-item-desc">Feels like</span>
                                     </p>
                                     <p>
-                                        High: {Math.round(today.temperatureHigh)}&#176;
+                                        {Math.round(today.temperatureHigh)}&#176;
+                                        <br /><span className="sub-item-desc">High</span>
                                     </p>
                                     <p>
-                                        Low: {Math.round(today.temperatureLow)}&#176;
+                                        {Math.round(today.temperatureLow)}&#176;
+                                        <br /><span className="sub-item-desc">Low</span>
                                     </p>
                                 </div>
                                 
                                 <div>
-                                    <h5>Precipitation:</h5>
+                                    <h5>Precip:</h5>
                                     <p>
-                                        Type: {today.precipType
+                                        {today.precipType
                                         ? today.precipType
                                         : 'none'}
                                     </p>
                                     <p>
-                                        Chance: {toPercent(today.precipProbability)}%
+                                        {toPercent(today.precipProbability)}%
+                                        <br /><span className="sub-item-desc">Chance</span>
                                     </p>
                                 </div>
                                 <div>
                                     <h5>Sun:</h5>
                                     <p>
-                                        Sunrise: {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        <br /><span className="sub-item-desc">Sunrise</span>
                                     </p>
                                     <p>
-                                        Sunset: {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        <br /><span className="sub-item-desc">Sunset</span>
                                     </p>
                                 </div>
                                 <div>
                                     <h5>Wind: MPH</h5>
                                     <p>
-                                        Speed: {today.windSpeed.toFixed(1)}
+                                        {today.windSpeed.toFixed(1)}
+                                        <br /><span className="sub-item-desc">Speed</span>
                                     </p>
                                     <p>
-                                        Gust: {today.windGust.toFixed(1)}
+                                        {today.windGust.toFixed(1)}
+                                        <br /><span className="sub-item-desc">Gust</span>
                                     </p>
                                     <p>
-                                        Direction: {today.windBearing}&#176;
+                                        {today.windBearing}&#176;
+                                        <br /><span className="sub-item-desc">Direction</span>
                                     </p>
                                 </div>
                                 <div>
                                     <h5>Other:</h5>
                                     <p>
-                                        Cloud Cover: {toPercent(today.cloudCover)}%
+                                        {toPercent(today.cloudCover)}%
+                                        <br /><span className="sub-item-desc">Cloud Cover</span>
                                     </p>
                                     <p>
-                                        Pressure: {today.pressure}
+                                        {today.pressure}
+                                        <br /><span className="sub-item-desc">Pressure</span>
                                     </p>
-                                </div>
-                                <div>
+                                {/* </div>
+                                <div> */}
                                     <p>
-                                        Humidity: {toPercent(today.humidity)}%
+                                        {toPercent(today.humidity)}%
+                                        <br /><span className="sub-item-desc">Humidity</span>
                                     </p>
                                     <p>
-                                        Dew Point: {today.dewPoint.toFixed(1)}&#176;F
+                                        {today.dewPoint.toFixed(1)}&#176;F
+                                        <br /><span className="sub-item-desc">Dew Point</span>
                                     </p>
                                 </div>
                                     
@@ -278,10 +291,13 @@ class Weather extends Component {
                                 </div>
                             </div>
                             <h3 className="align-center">This Week:</h3>
-                            {thisWeekMap}
-                                
+                            <div className="This-week-map-container">
+                                {thisWeekMap}
+                            </div>
                         </div>
-                    :this.state.loading}
+                    :<div className="Loading">
+                        {this.state.loading}
+                    </div>}
                         
                         {/* {help.forecast.currently} */}
                         {/* {this.state.weatherData.forecast.currently.temperature} */}

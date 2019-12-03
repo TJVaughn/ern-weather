@@ -29,10 +29,10 @@ class Footer extends Component {
                     {this.state.cookiePolicy
                     ? <div className="cookie-policy" onClick={this.handleCookieSwitch}>
                             Hey, we use a cookie to remember your search term for 30 days, and another one for analytics purposes, but 
-                            that's it! <button>X</button>
+                            that's it! <button>Accept</button>
                     </div>
                     :''}
-                    
+                    <div className="Margin-bottom-50"></div>
     		</div>
     	);
     }

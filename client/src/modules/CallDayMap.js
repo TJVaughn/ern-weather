@@ -28,77 +28,86 @@ const handleDayOfWeek = (time) => {
 const callDayMap = (array) => {
     // console.log(array)
     return thisWeekMap = array.map(item => 
-        <div key={`${item.time}-key`}>
-            <h4>{`${handleDayOfWeek(item.time)}:`}</h4>
-            <p className="align-center">
-                {item.summary}
-            </p>
-            <div className="Weather-today-outer">
+        <div className="This-week-map" key={`${item.time}-key`}>
+            
             <div>
-                <h5>Temperature: F</h5>
-                <p>
-                    High: {Math.round(item.temperatureHigh)}&#176;
+                <h4>{`${handleDayOfWeek(item.time)}:`}</h4>
+                <p className="align-center">
+                    {item.summary}
                 </p>
-                <p>
-                    Low: {Math.round(item.temperatureLow)}&#176;
-                </p>
-            </div>
-            <div>
+                <div className="This-week-map-inner">
+                    <div>
+                        <h6>Temp: F</h6>
+                        <p>
+                            {Math.round(item.temperatureHigh)}&#176;
+                            <br /><span className="sub-item-desc">High</span>
+                        </p>
+                        <p>
+                            {Math.round(item.temperatureLow)}&#176;
+                            <br /><span className="sub-item-desc">Low</span>
+                        </p>
+                    </div>
+                    <div>
                 
-                <h5>Sun:</h5>
-        
-                <p>
-                    Sunrise: {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                </p>
-                <p>
-                    Sunset: {new Date(item.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                </p>
-            </div>
-            
-            
-            <div>
-                <h5>Precipitation:</h5>
-                <p>
-                    Type: {item.precipType
-                    ? item.precipType
-                    : 'none'}
-                </p>
-                <p>
-                    Chance: {toPercent(item.precipProbability)}%
-                </p>
-            </div>
-            
-            <div>
-                <h5>Wind: MPH</h5>
-                <p>
-                    Speed: {item.windSpeed.toFixed(1)}
-                </p>
-                <p>
-                    Gust: {item.windGust.toFixed(1)}
-                </p>
-                <p>
-                    Direction: {item.windBearing}&#176;
-                </p>
-            </div>
-            <div>
-                <h5>Other:</h5>
-                <p></p>
-                <p>
-                    Cloud Cover: {toPercent(item.cloudCover)}%
-                </p>
-                <p>
-                    Pressure: {item.pressure}
-                </p>
-            </div>
-            <div>
-                <p>
-                    Humidity: {toPercent(item.humidity)}%
-                </p>
-                <p>
-                    Dew Point: {item.dewPoint.toFixed(1)}&#176;F
-                </p>
-            </div>
+                        <h6>Sun:</h6>
                 
+                        <p>
+                            {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                            <br /><span className="sub-item-desc">Sunrise</span>
+                        </p>
+                        <p>
+                            {new Date(item.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                            <br /><span className="sub-item-desc">Sunset</span>
+                        </p>
+                    </div>
+                    <div>
+                        <h6>Precip:</h6>
+                        <p>
+                            {item.precipType
+                            ? item.precipType
+                            : 'none'}
+                        </p>
+                        <p>
+                            {toPercent(item.precipProbability)}%
+                            <br /><span className="sub-item-desc">chance</span>
+                        </p>
+                    </div>
+                    <div>
+                        <h6>Wind: MPH</h6>
+                        <p>
+                            {item.windSpeed.toFixed(1)}
+                            <br /><span className="sub-item-desc">Speed</span>
+                        </p>
+                        <p>
+                            {item.windGust.toFixed(1)}
+                            <br /><span className="sub-item-desc">Gust</span>
+                        </p>
+                        <p>
+                            {item.windBearing}&#176;
+                            <br /><span className="sub-item-desc">Direction</span>
+                        </p>
+                    </div>
+                    <div>
+                        <h6>Other:</h6>
+                        <p></p>
+                        <p>
+                            {toPercent(item.cloudCover)}%
+                            <br /><span className="sub-item-desc">Cloud Cover</span>
+                        </p>
+                        <p>
+                            {item.pressure}
+                            <br /><span className="sub-item-desc">Pressure</span>
+                        </p>
+                        <p>
+                            {toPercent(item.humidity)}%
+                            <br /><span className="sub-item-desc">Humidity</span>
+                        </p>
+                        <p>
+                            {item.dewPoint.toFixed(1)}&#176;F
+                            <br /><span className="sub-item-desc">Dew Point</span>
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     )

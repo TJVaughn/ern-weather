@@ -3,11 +3,17 @@ body {
   @media only screen and(max-width: 777px){
     margin: 0 20px;
   }
+  @media only screen and(max-width: 500px){
+    margin: 0 7px;
+  }
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-h1 {
+h1, h2, h3, h4, h5, h6{
   color: #444;
-
+  margin: 3px 0;
+}
+p {
+  margin: 3px 0;
 }
 a {
   color: #555;
@@ -41,4 +47,11 @@ a:visited {
   position: fixed;
   width: 60%;
   bottom: 3px;
+  cursor: pointer;
+  @media only screen and(max-width: 550px){
+    width: 88.5%;
+  }
+}
+.Margin-bottom-50 {
+  margin-bottom: 50px;
 }
