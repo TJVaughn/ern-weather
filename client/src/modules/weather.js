@@ -268,9 +268,6 @@ class Weather extends Component {
                                         Temp(deg):
                                     </p>
                                     <p>
-                                        Humidity:
-                                    </p>
-                                    <p>
                                         Precip:
                                     </p>
                                     <p>
@@ -284,6 +281,9 @@ class Weather extends Component {
                                     </p>
                                     <p>
                                         Direction(deg):
+                                    </p>
+                                    <p>
+                                        Humidity:
                                     </p>
                                 </div>
                                 <div className="Weather-hourly-map">

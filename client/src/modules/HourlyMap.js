@@ -3,6 +3,8 @@ import clearImg from '../images/clear.png';
 import partlyCloudyImg from '../images/partly-cloudy.png'
 import mostlyCloudyImg from '../images/mostly-cloudy.png'
 import overcastImg from '../images/overcast.png';
+import lightSnowImg from '../images/light-snow.png'
+import snowImg from '../images/snow.png'
 import { toPercent } from './utils'
 
 let hourlyMap = []
@@ -16,6 +18,10 @@ const handleHourlyIcon = (summary) => {
         imgSrc = partlyCloudyImg
     } else if(icon === 'mostly cloudy'){
         imgSrc = mostlyCloudyImg
+    } else if(icon === 'light snow') {
+        imgSrc = lightSnowImg
+    } else if(icon === 'snow') {
+        imgSrc = lightSnowImg
     } else {
         imgSrc = overcastImg
     }
@@ -37,9 +43,6 @@ const handleHourlyMap = (array) => {
                     {Math.round(item.temperature)}F
                 </p>
                 <p>
-                    {toPercent(item.humidity)}%
-                </p>
-                <p>
                     {item.precipType
                     ? item.precipType
                     : 'none'}
@@ -55,6 +58,9 @@ const handleHourlyMap = (array) => {
                 </p>
                 <p>
                     {Math.round(item.windBearing)}
+                </p>
+                <p>
+                    {toPercent(item.humidity)}%
                 </p>
         </div>
         )
