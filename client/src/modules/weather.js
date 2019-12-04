@@ -94,7 +94,7 @@ class Weather extends Component {
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
-            // console.log(hourlyArray)
+            console.log(hourlyArray)
             handleHourlyMap(hourlyArray)
             today = dayArray.shift()
             console.log(today)
@@ -171,7 +171,7 @@ class Weather extends Component {
                             <div className="Weather-today-outer">
                                 
                                 <div>
-                                    <h5>Temp: F</h5>
+                                    {/* <h5>Temp: F</h5> */}
                                     <p>
                                         {Math.round(curr.temperature)}&#176;
                                         <br /><span className="sub-item-desc">Current</span>
@@ -191,7 +191,7 @@ class Weather extends Component {
                                 </div>
                                 
                                 <div>
-                                    <h5>Precip:</h5>
+                                    {/* <h5>Precip:</h5> */}
                                     <p>
                                         {today.precipType
                                         ? today.precipType
@@ -203,7 +203,7 @@ class Weather extends Component {
                                     </p>
                                 </div>
                                 <div>
-                                    <h5>Sun:</h5>
+                                    {/* <h5>Sun:</h5> */}
                                     <p>
                                         {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
                                         <br /><span className="sub-item-desc">Sunrise</span>
@@ -214,7 +214,7 @@ class Weather extends Component {
                                     </p>
                                 </div>
                                 <div>
-                                    <h5>Wind: MPH</h5>
+                                    {/* <h5>Wind: MPH</h5> */}
                                     <p>
                                         {today.windSpeed.toFixed(1)}
                                         <br /><span className="sub-item-desc">Speed</span>
@@ -229,7 +229,7 @@ class Weather extends Component {
                                     </p>
                                 </div>
                                 <div>
-                                    <h5>Other:</h5>
+                                    {/* <h5>Other:</h5> */}
                                     <p>
                                         {toPercent(today.cloudCover)}%
                                         <br /><span className="sub-item-desc">Cloud Cover</span>

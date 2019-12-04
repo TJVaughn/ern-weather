@@ -10,9 +10,16 @@ import veryWindyImg from '../images/very-windy.png'
 import { toPercent } from './utils'
 
 let hourlyMap = []
+// let lightSnowArr = ["light snow"]
+// let lightSnowSplitArr = lightSnowArr.split('');
+// filter((i) => {
+//     if (i === )
+// })
 
-const handleHourlyIcon = (summary, wind) => {
+const handleHourlyIcon = (summary, wind, precipType, precipProb) => {
     let icon = summary.toLowerCase();
+    // let iconSplitArr = icon.split('')
+    // console.log(iconSplitArr)
     let isWindy = false;
     let isVeryWindy = false;
     if(wind >= 12) {
@@ -32,9 +39,7 @@ const handleHourlyIcon = (summary, wind) => {
         imgSrc = partlyCloudyImg
     } else if(icon === 'mostly cloudy'){
         imgSrc = mostlyCloudyImg
-    } else if(icon === 'light snow') {
-        imgSrc = lightSnowImg
-    } else if(icon === 'snow') {
+    } else if(precipType === "snow" && precipProb >= 0.20) {
         imgSrc = snowImg
     } else {
         imgSrc = overcastImg
@@ -52,7 +57,7 @@ const handleHourlyMap = (array) => {
                 <p className="hourly-item-summary">
                     {item.summary}
                 </p>
-                <img className="Hourly-summary-icon" src={handleHourlyIcon(item.summary, item.windSpeed)} alt={item.summary} />
+                <img className="Hourly-summary-icon" src={handleHourlyIcon(item.summary, item.windSpeed, item.precipType, item.precipProbability)} alt={item.summary} />
                 <p>
                     {Math.round(item.temperature)}F
                 </p>
