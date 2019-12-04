@@ -5,14 +5,28 @@ import mostlyCloudyImg from '../images/mostly-cloudy.png'
 import overcastImg from '../images/overcast.png';
 import lightSnowImg from '../images/light-snow.png'
 import snowImg from '../images/snow.png'
+import windyImg from '../images/windy.png'
+import veryWindyImg from '../images/very-windy.png'
 import { toPercent } from './utils'
 
 let hourlyMap = []
 
-const handleHourlyIcon = (summary) => {
+const handleHourlyIcon = (summary, wind) => {
     let icon = summary.toLowerCase();
+    let isWindy = false;
+    let isVeryWindy = false;
+    if(wind >= 12) {
+        isWindy = true;
+    }
+    if(wind >= 20) {
+        isVeryWindy = true;
+    }
     let imgSrc = ''
-    if(icon === 'clear'){
+    if(isWindy && !isVeryWindy) {
+        imgSrc = windyImg
+    } else if(isWindy && isVeryWindy) {
+        imgSrc = veryWindyImg
+    } else if(icon === 'clear'){
         imgSrc = clearImg
     } else if(icon === 'partly cloudy') {
         imgSrc = partlyCloudyImg
@@ -21,7 +35,7 @@ const handleHourlyIcon = (summary) => {
     } else if(icon === 'light snow') {
         imgSrc = lightSnowImg
     } else if(icon === 'snow') {
-        imgSrc = lightSnowImg
+        imgSrc = snowImg
     } else {
         imgSrc = overcastImg
     }
@@ -38,7 +52,7 @@ const handleHourlyMap = (array) => {
                 <p className="hourly-item-summary">
                     {item.summary}
                 </p>
-                <img className="Hourly-summary-icon" src={handleHourlyIcon(item.summary)} alt={item.summary} />
+                <img className="Hourly-summary-icon" src={handleHourlyIcon(item.summary, item.windSpeed)} alt={item.summary} />
                 <p>
                     {Math.round(item.temperature)}F
                 </p>
