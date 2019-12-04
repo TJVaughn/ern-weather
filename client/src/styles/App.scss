@@ -44,12 +44,16 @@ a:visited {
   color: #fff;
   border-radius: 3px;
   padding: 10px;
+  margin: 0 auto;
   position: fixed;
-  width: 60%;
+  // width: 60%;
   bottom: 3px;
+  left: 20%;
+  right: 20%;
   cursor: pointer;
-  @media only screen and(max-width: 550px){
-    width: 88.5%;
+  @media only screen and(max-width: 777px){
+    left: 20px;
+    right: 20px;
   }
 }
 .Margin-bottom-50 {
