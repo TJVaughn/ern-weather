@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { toPercent, callWeatherAPI } from './utils';
-import {callAlertsMap, alertsMap} from './Alerts';
-import {callDayMap, thisWeekMap} from './CallDayMap';
-import {handleHourlyMap, hourlyMap } from './HourlyMap';
+import { callAlertsMap, alertsMap } from './Alerts';
+import { callDayMap, thisWeekMap } from './CallDayMap';
+import { handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
+// import { starsMap, handleGenStars } from './Stars';
 // import ReactGA from 'react-ga';
 
 // ReactGA.initialize('UA-136509113-9');
@@ -16,6 +17,7 @@ let alerts = []
 let hourlyArray = []
 let today = []
 let userSearch = ''
+
 
 class Weather extends Component {
     constructor(props){
@@ -80,6 +82,8 @@ class Weather extends Component {
         }
     }
     componentDidMount(){
+        // handleGenStars()
+        
         userSearch = getSearchCookie('search')
         if(userSearch === '') {
             return '';
@@ -94,10 +98,10 @@ class Weather extends Component {
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
-            console.log(hourlyArray)
+            // console.log(hourlyArray)
             handleHourlyMap(hourlyArray)
             today = dayArray.shift()
-            console.log(today)
+            // console.log(today)
             callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
@@ -119,13 +123,23 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
+            // todayCurrentTime = new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'});
+            // todaySunsetTime = new Date('1995-12-17T03:24:00')
+            // console.log(todaySunsetTime, "sunset")
+            // console.log(todayCurrentTime, "current")
+
+            // if(todayCurrentTime > todaySunsetTime) {
+            
         }).catch(err => console.log(err))
     }
-
+    
     render(){
     	return(
     		<div>
+                {/* {console.log(starsMap)} */}
+                {/* {starsMap} */}
 
+                
                 {/* FORM TO HANDLE SEARCH INPUT */}
     			<form onSubmit={this.handleSubmit}>
                     <label>Location: </label>
@@ -145,9 +159,9 @@ class Weather extends Component {
                         {this.state.switch
                         ? <div>
 
-                            <h2>
+                            <p className="Weather-location">
                                 {weatherArray.name}
-                            </h2>
+                            </p>
 
                             {this.state.alertSwitch
                             ?<div>
@@ -180,6 +194,9 @@ class Weather extends Component {
                                         {Math.round(curr.apparentTemperature)}&#176;
                                         <br /><span className="sub-item-desc">Feels like</span>
                                     </p>
+                                    
+                                </div>
+                                <div>
                                     <p>
                                         {Math.round(today.temperatureHigh)}&#176;
                                         <br /><span className="sub-item-desc">High</span>
@@ -214,7 +231,7 @@ class Weather extends Component {
                                     </p>
                                 </div>
                                 <div>
-                                    {/* <h5>Wind: MPH</h5> */}
+                                    <h5>Wind: MPH</h5>
                                     <p>
                                         {today.windSpeed.toFixed(1)}
                                         <br /><span className="sub-item-desc">Speed</span>
@@ -228,7 +245,7 @@ class Weather extends Component {
                                         <br /><span className="sub-item-desc">Direction</span>
                                     </p>
                                 </div>
-                                <div>
+                                {/* <div> */}
                                     {/* <h5>Other:</h5> */}
                                     <p>
                                         {toPercent(today.cloudCover)}%
@@ -238,8 +255,7 @@ class Weather extends Component {
                                         {today.pressure}
                                         <br /><span className="sub-item-desc">Pressure</span>
                                     </p>
-                                {/* </div>
-                                <div> */}
+                        
                                     <p>
                                         {toPercent(today.humidity)}%
                                         <br /><span className="sub-item-desc">Humidity</span>
@@ -248,7 +264,7 @@ class Weather extends Component {
                                         {today.dewPoint.toFixed(1)}&#176;F
                                         <br /><span className="sub-item-desc">Dew Point</span>
                                     </p>
-                                </div>
+                                {/* </div> */}
                                     
                             </div>
                             <h3 className="align-center">

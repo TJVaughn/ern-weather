@@ -3,7 +3,7 @@ import clearImg from '../images/clear.png';
 import partlyCloudyImg from '../images/partly-cloudy.png'
 import mostlyCloudyImg from '../images/mostly-cloudy.png'
 import overcastImg from '../images/overcast.png';
-import lightSnowImg from '../images/light-snow.png'
+// import lightSnowImg from '../images/light-snow.png'
 import snowImg from '../images/snow.png'
 import windyImg from '../images/windy.png'
 import veryWindyImg from '../images/very-windy.png'

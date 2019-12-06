@@ -4,7 +4,7 @@ const request = require('request');
 
 const forecast = (lat, long, name, callback) => {
     const key = "21d84f83927a2f30788834bdb7bdc322";
-    const url =  `https://api.darksky.net/forecast/${key}/${lat},${long}`
+    const url =  `https://api.darksky.net/forecast/${key}/${lat},${long}?exclude=minutely&extend=hourly`
     // console.log(url)
     request({ url, json: true }, (error, { body } = {}) => {
         if(error) {
