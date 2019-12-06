@@ -1,20 +1,49 @@
 body {
+  background-color: #fff;
+
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  // z-index: 1;
+}
+.App {
+  background-color: #fff;
+  position: relative;
+  z-index: 100;
+  padding: 5px;
+
+}
+.Margin-div {
   margin: 0 20%;
+  background-color: #fff;
   @media only screen and(max-width: 777px){
     margin: 0 20px;
   }
   @media only screen and(max-width: 500px){
     margin: 0 7px;
   }
-  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  z-index: 1;
+}
+div {
+  background-color: #fff;
+
+}
+.Background-color-night {
+  background-color: #003;
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  margin: -30%;
+  z-index: -1000;
 }
 h1, h2, h3, h4, h5, h6{
-  color: #444;
+  background-color: #fff;
+
+  // color: #ccc;
   margin: 3px 0;
 }
 p {
-  margin: 3px 0;
+  background-color: #fff;
+
+  padding: 3px 0;
+  margin: 0;
 }
 a {
   color: #555;
@@ -26,6 +55,8 @@ a:visited {
   
 }
 .footer {
+  background-color: #fff;
+
   display: block;
   margin: 10px auto;
   // position: relative;
@@ -58,5 +89,6 @@ a:visited {
   }
 }
 .Margin-bottom-50 {
+
   margin-bottom: 50px;
 }

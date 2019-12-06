@@ -1,18 +1,23 @@
 import React from 'react'
 
-let randNumTop  = Math.random() * 100;
-let randNumRight  = Math.random() * 100;
+let randNumTop = '';
+let randNumRight = '';
 let starsMap = []
 
 const makeStars = () => {
+
     let stars = []
-    for(let i = 0; i < 50; i++){
+    for(let i = 0; i < 500; i++){
+        randNumTop = Math.random() * 100;
+        randNumRight = Math.random() * 100;
+        // console.log(randNumTop, randNumRight)
         stars.push({
             id: i,
             top: randNumTop,
             right: randNumRight
         })
     }
+    // console.log(stars)
     return stars
 }
 
@@ -21,7 +26,7 @@ const handleGenStars = () => {
     starsMap = starsArray.map(item => 
             <div className="Weather-stars" 
             key={`star-id=${item.id}`}
-            style={{top: `${randNumTop}%`, right: `${randNumRight}%`}}>
+            style={{top: `${item.top}%`, right: `${item.right}%`}}>
             </div>
         )
         

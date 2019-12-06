@@ -1,4 +1,6 @@
 .Weather-container{
+    background-color: #fff;
+
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -11,6 +13,8 @@
     }
 } 
 .Weather-content-container {
+    background-color: #fff;
+
     overflow: scroll;
     
 }
@@ -22,10 +26,14 @@
     
 // }
 .Weather-location{
+    // background-color: #fff;
+    // color: #ccc;
     font-size: 1.3em;
     margin: 10px 5px;
 }
 .Alert-button{
+    background-color: #fff;
+
     font-size: 1.2em;
     background-color: rgb(151, 2, 2);
     color: #fff;
@@ -38,6 +46,8 @@
 }
 
 .Weather-hourly-data {
+    background-color: #fff;
+
     text-align: center;
     display: grid;
 
@@ -67,6 +77,8 @@
         grid-template-rows: repeat(10, 40px);
     }
     .Weather-hourly-map{
+        background-color: #fff;
+
         display: grid;
         grid-template-columns: repeat(170, 17%);
         grid-template-rows: 100%;
@@ -105,6 +117,9 @@
 }
 
 .Weather-today-outer {
+    background-color: #fff;
+    padding: 5px;
+    margin: 5px;
     display: grid;
     grid-template-columns: repeat(5, 20%);
     border: 1px solid #122bd8;
@@ -127,12 +142,16 @@
 }
 
 .Loading {
+    background-color: #fff;
+
     font-size: 1.2em;
     text-align: center;
     margin: 15px;
 
 }
 .This-week-map-container {
+    background-color: #fff;
+    padding: 20px 0;
     @media only screen and(max-width: 780px){
         overflow: scroll;
         display: grid;
@@ -166,9 +185,9 @@
     position: fixed;
     height: 4px;
     width: 4px;
-    background-color: #000;
+    background-color: #fff;
     border-radius: 50%;
     // top: 5px;
     // right: 5px;
-    z-index: -500;
+    z-index: -1;
 }

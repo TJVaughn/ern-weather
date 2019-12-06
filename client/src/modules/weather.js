@@ -4,11 +4,11 @@ import { callAlertsMap, alertsMap } from './Alerts';
 import { callDayMap, thisWeekMap } from './CallDayMap';
 import { handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
-// import { starsMap, handleGenStars } from './Stars';
-// import ReactGA from 'react-ga';
+import { starsMap, handleGenStars } from './Stars';
+import ReactGA from 'react-ga';
 
-// ReactGA.initialize('UA-136509113-9');
-// ReactGA.pageview(window.location.pathname + window.location.search);
+ReactGA.initialize('UA-136509113-9');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 let weatherArray = []
 let curr = []
@@ -17,7 +17,8 @@ let alerts = []
 let hourlyArray = []
 let today = []
 let userSearch = ''
-
+let todayCurrentTime = ''
+let todaySunsetTime = ''
 
 class Weather extends Component {
     constructor(props){
@@ -29,7 +30,8 @@ class Weather extends Component {
             alertSwitch: false,
             switch: false,
             loading: '',
-            alertContentSwitch: false
+            alertContentSwitch: false,
+            isNightTime: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -81,9 +83,16 @@ class Weather extends Component {
             this.setState({alertContentSwitch: false})
         }
     }
+    dayOrNight(sunset, current){
+        console.log("Hello from day or night")
+        if(sunset < current){
+            this.setState({isNightTime: true})
+        } else {
+            this.setState({isNightTime: false})
+        }
+    }
     componentDidMount(){
-        // handleGenStars()
-        
+        handleGenStars()
         userSearch = getSearchCookie('search')
         if(userSearch === '') {
             return '';
@@ -123,23 +132,23 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
-            // todayCurrentTime = new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'});
-            // todaySunsetTime = new Date('1995-12-17T03:24:00')
-            // console.log(todaySunsetTime, "sunset")
-            // console.log(todayCurrentTime, "current")
-
+            todayCurrentTime = new Date()
+            todaySunsetTime = new Date(today.sunsetTime * 1000)
+            console.log(todaySunsetTime, "sunset")
+            console.log(todayCurrentTime, "current")
+            this.dayOrNight(todaySunsetTime, todayCurrentTime)
             // if(todayCurrentTime > todaySunsetTime) {
-            
+ 
         }).catch(err => console.log(err))
     }
     
     render(){
     	return(
     		<div>
-                {/* {console.log(starsMap)} */}
-                {/* {starsMap} */}
-
-                
+                {this.state.isNightTime
+                ?<div className="Background-color-night"></div>
+                :''}
+                {/*  */}
                 {/* FORM TO HANDLE SEARCH INPUT */}
     			<form onSubmit={this.handleSubmit}>
                     <label>Location: </label>
@@ -319,6 +328,10 @@ class Weather extends Component {
                         {/* {this.state.weatherData.forecast.currently.temperature} */}
                     </div>
                 </div>
+                {this.state.isNightTime
+                ?<div className="Background-color-night">{starsMap}</div>
+                :''}
+                
     		</div>
     	);
     }
