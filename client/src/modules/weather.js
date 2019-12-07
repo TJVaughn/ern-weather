@@ -18,6 +18,8 @@ let alerts = []
 let hourlyArray = []
 let today = []
 let userSearchCookie = ''
+let todaySunsetTime = '';
+let todayCurrentTime = '';
 
 class Weather extends Component {
     constructor(props){
@@ -30,13 +32,21 @@ class Weather extends Component {
             switch: false,
             loading: '',
             alertContentSwitch: false,
-            isNightTime: false
+            isNightTime: false,
+            nightModeClass: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleAlertContent = this.handleAlertContent.bind(this);
     }
-
+    dayOrNight(sunset, current){
+        // console.log("Hello from day or night")
+        if(sunset < current){
+            this.setState({isNightTime: true, nightModeClass: 'Night-mode'})
+        } else {
+            this.setState({isNightTime: false, nightModeClass: ''})
+        }
+    }
     handleGetWeather(searchTerm){
         this.setState({switch: false})
         this.setState({alertSwitch: false})
@@ -59,6 +69,9 @@ class Weather extends Component {
                     callAlertsMap(alerts)
                 }
             }
+            todayCurrentTime = new Date()
+            todaySunsetTime = new Date(today.sunsetTime * 1000)
+            this.dayOrNight(todaySunsetTime, todayCurrentTime);
             this.setState({error: res.error})
             // We will remove the loading message
             this.setState({loading: ''})
@@ -97,19 +110,19 @@ class Weather extends Component {
     
     render(){
     	return(
-    		<div className="Margin-div">
-                <h2>Whether App</h2>
-                <p className="sub-item-desc">
-                    Find out whether you want to go outside or not
-                </p>
+    		<div className={`${this.state.nightModeClass}`}>
+                <div className="Margin-div">
+                    <h2>Whether App</h2>
+                    <p className="sub-item-desc">
+                        Find out whether you want to go outside or not
+                    </p>
 
-                {/* FORM TO HANDLE SEARCH INPUT */}
-    			<form onSubmit={this.handleSubmit}>
-                    <label>Location: </label>
-                    <input value={this.state.input} onChange={this.handleChange} />
-                    <button>Get</button>
-                </form>
-
+                    {/* FORM TO HANDLE SEARCH INPUT */}
+                    <form onSubmit={this.handleSubmit}>
+                        <label>Location: </label>
+                        <input value={this.state.input} onChange={this.handleChange} />
+                        <button>Get</button>
+                    </form>
                 <div>
                     {/* IF ERROR SWITCH IS TRUE, THE FORMER TEXT IS DISPLAYED */}
                     {this.state.errorSwitch 
@@ -166,6 +179,7 @@ class Weather extends Component {
                     </div>
                 </div>
                 <Footer />
+                </div>
     		</div>
     	);
     }

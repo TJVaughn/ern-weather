@@ -81,7 +81,7 @@
     margin: 5px;
     display: grid;
     grid-template-columns: repeat(5, 20%);
-    border: 1px solid #122bd8;
+    // border: 1px solid #122bd8;
     border-radius: 5px;
     box-shadow: #122bd8 4px 4px 4px;
     text-align: center;
@@ -116,19 +116,20 @@
     @media only screen and(max-width: 550px){
         grid-template-columns: repeat(7, 98%);
     }
-    .This-week-map {
-        border: 1px solid #ffffff00;
-        border-radius: 5px;
-        box-shadow:#aaa -5px -5px -5px;
-        text-align: center;
-        margin: 10px 20px;
-        @media only screen and(max-width: 550px){
-            margin: 10px 5px;
-        }
-        .This-week-map-inner {
-            display: grid;
-            grid-template-columns: repeat(5, 20%);
-        }
-        
+
+}
+.This-week-map {
+    border: 1px solid #ffffff00;
+    border-radius: 5px;
+    box-shadow: -3px -3px 5px #aaa, 4px 4px 10px #11a;
+    text-align: center;
+    margin: 10px 20px;
+    @media only screen and(max-width: 550px){
+        margin: 10px 5px;
     }
+    .This-week-map-inner {
+        display: grid;
+        grid-template-columns: repeat(5, 20%);
+    }
+    
 }

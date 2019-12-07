@@ -13,6 +13,10 @@ body {
     margin: 0 7px;
   }
 }
+.Night-mode {
+  background-color: #000;
+  color: #fff;
+}
 
 
 h1, h2, h3, h4, h5, h6{
@@ -31,7 +35,8 @@ a:visited {
   color: #555;
 }
 .footer {
-  background-color: #fff;
+  background-color: #000;
+  color: #fff;
   display: block;
   margin: 0;
   padding: 5px;
