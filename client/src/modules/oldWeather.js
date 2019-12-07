@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import { toPercent, callWeatherAPI } from './utils';
-import clearImg from '../images/clear.png';
-import partlyCloudyImg from '../images/partly-cloudy.png'
-import mostlyCloudyImg from '../images/mostly-cloudy.png'
-import overcastImg from '../images/overcast.png';
+import { callAlertsMap, alertsMap } from './Alerts';
+import { callDayMap, thisWeekMap } from './CallDayMap';
+import { handleHourlyMap, hourlyMap } from './HourlyMap';
+import { setSearchCookie, getSearchCookie } from './cookies'
+// import { starsMap, handleGenStars } from './Stars';
+import Footer from './Footer'
 
-// import { searchCookie } from './cookies'
-// console.log(searchCookie)
+import ReactGA from 'react-ga';
 
+ReactGA.initialize('UA-136509113-9');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 let weatherArray = []
 let curr = []
 let dayArray = []
 let alerts = []
-let alertsMap = []
-let thisWeekMap = []
 let hourlyArray = []
-let hourlyMap = []
 let today = []
 let userSearch = ''
+// let todayCurrentTime = ''
+// let todaySunsetTime = ''
 
 class Weather extends Component {
     constructor(props){
@@ -30,183 +32,13 @@ class Weather extends Component {
             alertSwitch: false,
             switch: false,
             loading: '',
-            alertContentSwitch: false
+            alertContentSwitch: false,
+            isNightTime: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleAlertContent = this.handleAlertContent.bind(this);
-        this.handleDayOfWeek = this.handleDayOfWeek.bind(this)
-    }
-
-    callAlertsMap(alerts){
-        return alertsMap = alerts.map(item =>
-            // Must give the items unique keys!
-            <div key={`alerts-${item.title}-${item.description}`}>
-                <h5>{item.title}</h5>
-                <p>
-                    {item.description}
-                </p>
-            </div>
-        )
-    }
-    getDayOfWeek(time){
-        const value = new Date(time * 1000);
-        const dayNum = value.getDay();
-        if(dayNum === 0){
-            return "Sunday"
-        } else if(dayNum === 1) {
-            return "Monday"
-        } else if(dayNum === 2) {
-            return "Tuesday"
-        } else if(dayNum === 3) {
-            return "Wednesday"
-        } else if(dayNum === 4) {
-            return "Thursday"
-        } else if(dayNum === 5) {
-            return "Friday"
-        } else {
-            return "Saturday"
-        }
-    }
-    handleDayOfWeek(time){
-        return this.getDayOfWeek(time)
-    }
-    callDayMap(array){
-        // console.log(array)
-        return thisWeekMap = array.map(item => 
-            <div key={`${item.time}-key`}>
-                <h4>{`${this.handleDayOfWeek(item.time)}:`}</h4>
-                <p className="align-center">
-                    {item.summary}
-                </p>
-                <div className="Weather-today-outer">
-                <div>
-                    <h5>Temperature: F</h5>
-                    <p>
-                        High: {Math.round(item.temperatureHigh)}&#176;
-                    </p>
-                    <p>
-                        Low: {Math.round(item.temperatureLow)}&#176;
-                    </p>
-                </div>
-                <div>
-                    
-                    <h5>Sun:</h5>
-            
-                    <p>
-                        Sunrise: {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                    </p>
-                    <p>
-                        Sunset: {new Date(item.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                    </p>
-                </div>
-                
-                
-                <div>
-                    <h5>Precipitation:</h5>
-                    <p>
-                        Type: {item.precipType
-                        ? item.precipType
-                        : 'none'}
-                    </p>
-                    <p>
-                        Chance: {toPercent(item.precipProbability)}%
-                    </p>
-                </div>
-                
-                <div>
-                    <h5>Wind: MPH</h5>
-                    <p>
-                        Speed: {item.windSpeed.toFixed(1)}
-                    </p>
-                    <p>
-                        Gust: {item.windGust.toFixed(1)}
-                    </p>
-                    <p>
-                        Direction: {item.windBearing}&#176;
-                    </p>
-                </div>
-                <div>
-                    <h5>Other:</h5>
-                    <p></p>
-                    <p>
-                        Cloud Cover: {toPercent(item.cloudCover)}%
-                    </p>
-                    <p>
-                        Pressure: {item.pressure}
-                    </p>
-                </div>
-                <div>
-                    <p>
-                        Humidity: {toPercent(item.humidity)}%
-                    </p>
-                    <p>
-                        Dew Point: {item.dewPoint.toFixed(1)}&#176;F
-                    </p>
-                </div>
-                    
-                </div>
-            </div>
-        )
-    }
-
-    handleHourlyIcon(summary){
-        let icon = summary.toLowerCase();
-        let imgSrc = ''
-        if(icon === 'clear'){
-            imgSrc = clearImg
-        } else if(icon === 'partly cloudy') {
-            imgSrc = partlyCloudyImg
-        } else if(icon === 'mostly cloudy'){
-            imgSrc = mostlyCloudyImg
-        } else {
-            imgSrc = overcastImg
-        }
-        return imgSrc;
-    }
-
-    handleHourlyMap(array){
-        hourlyMap = array.map(item =>
-            <div className="Hourly-map" key={`key-time-${item.time}`}>
-                <h5>
-                    {new Date(item.time * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                </h5>
-                
-                    <p className="hourly-item-summary">
-                        {item.summary}
-                    </p>
-                    <img className="Hourly-summary-icon" src={this.handleHourlyIcon(item.summary)} alt={item.summary} />
-                    <p>
-                        {Math.round(item.temperature)}F
-                    </p>
-                    <p>
-                        {toPercent(item.humidity)}%
-                    </p>
-                    <p>
-                        {item.precipType
-                        ? item.precipType
-                        : 'none'}
-                    </p>
-                    <p>
-                        {toPercent(item.precipProbability)}%
-                    </p>
-                    <p>
-                        {Math.round(item.windSpeed)}
-                    </p>
-                    <p>
-                        {Math.round(item.windGust)}
-                    </p>
-                    <p>
-                        {Math.round(item.windBearing)}
-                    </p>
-            </div>
-            )
-    }
-
-    setSearchCookie(input){
-        let search  = document.cookie = "path=/;search=" + input + ';'
-        console.log(search.split('').splice(14));
-        return userSearch = search.split('').splice(14);
+        // this.handleDayOfWeek = this.handleDayOfWeek.bind(this)
     }
 
     handleChange(evt){
@@ -225,24 +57,16 @@ class Weather extends Component {
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
-            // console.log(hourlyArray)
-            this.handleHourlyMap(hourlyArray)
+            handleHourlyMap(hourlyArray)
             today = dayArray.shift()
-            console.log(today)
-            this.callDayMap(dayArray);
+            callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
                 if(alerts.length > 0) {
                     this.setState({alertSwitch: true})
-                    this.callAlertsMap(alerts)
+                    callAlertsMap(alerts)
                 }
             }
-
-            // Assuming all of these items are defined, the program will keep running
-            //Otherwise it will stop and error switch will remain true
-            // We call this function to now iterate over the array as it will not be empty anymore
-            // console.log(weatherArray)
-            // console.log(res.error)
             this.setState({error: res.error})
             // We will remove the loading message
             this.setState({loading: ''})
@@ -250,7 +74,7 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
-            this.setSearchCookie(this.state.input)
+            setSearchCookie("search", this.state.input, 30)
         }).catch(err => console.log(err))
     }
 
@@ -261,7 +85,17 @@ class Weather extends Component {
             this.setState({alertContentSwitch: false})
         }
     }
+    // dayOrNight(sunset, current){
+    //     console.log("Hello from day or night")
+    //     if(sunset < current){
+    //         this.setState({isNightTime: true})
+    //     } else {
+    //         this.setState({isNightTime: false})
+    //     }
+    // }
     componentDidMount(){
+        // handleGenStars()
+        userSearch = getSearchCookie('search')
         if(userSearch === '') {
             return '';
         }
@@ -276,15 +110,15 @@ class Weather extends Component {
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
             // console.log(hourlyArray)
-            this.handleHourlyMap(hourlyArray)
+            handleHourlyMap(hourlyArray)
             today = dayArray.shift()
-            console.log(today)
-            this.callDayMap(dayArray);
+            // console.log(today)
+            callDayMap(dayArray);
             if(weatherArray.forecast.alerts) {
                 alerts = weatherArray.forecast.alerts;
                 if(alerts.length > 0) {
                     this.setState({alertSwitch: true})
-                    this.callAlertsMap(alerts)
+                    callAlertsMap(alerts)
                 }
             }
 
@@ -300,12 +134,26 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
+            // todayCurrentTime = new Date()
+            // todaySunsetTime = new Date(today.sunsetTime * 1000)
+            // console.log(todaySunsetTime, "sunset")
+            // console.log(todayCurrentTime, "current")
+            // this.dayOrNight(todaySunsetTime, todayCurrentTime)
+            // if(todayCurrentTime > todaySunsetTime) {
+ 
         }).catch(err => console.log(err))
     }
-
+    
     render(){
     	return(
-    		<div>
+    		<div className="Margin-div">
+                <h2>Whether App</h2>
+                <p className="sub-item-desc">
+                    Find out whether you want to go outside or not
+                </p>
+                {this.state.isNightTime
+                ?<div className="Background-color-night"></div>
+                :''}
 
                 {/* FORM TO HANDLE SEARCH INPUT */}
     			<form onSubmit={this.handleSubmit}>
@@ -320,15 +168,15 @@ class Weather extends Component {
                     ? <h4>"Sorry, check your connection or provide a valid search term"</h4>
                     :''}
 
-
+                    <p className="Weather-location">
+                        {weatherArray.name}
+                    </p>
                     <div>
                         {/* RENDERS ALL THE CONTENT IF ITS BEEN FETCHED, OR loading state */}
                         {this.state.switch
-                        ? <div>
+                        ? <div className="Weather-container">
 
-                            <h2>
-                                {weatherArray.name}
-                            </h2>
+                            
 
                             {this.state.alertSwitch
                             ?<div>
@@ -352,70 +200,86 @@ class Weather extends Component {
                             <div className="Weather-today-outer">
                                 
                                 <div>
-                                    <h5>Temperature: F</h5>
+                                    {/* <h5>Temp: F</h5> */}
                                     <p>
-                                        Current: {Math.round(curr.temperature)}&#176;
+                                        {Math.round(curr.temperature)}&#176;
+                                        <br /><span className="sub-item-desc">Current</span>
                                     </p>
                                     <p>
-                                        Feels Like: {Math.round(curr.apparentTemperature)}&#176;
+                                        {Math.round(curr.apparentTemperature)}&#176;
+                                        <br /><span className="sub-item-desc">Feels like</span>
+                                    </p>
+                                    
+                                </div>
+                                <div>
+                                    <p>
+                                        {Math.round(today.temperatureHigh)}&#176;
+                                        <br /><span className="sub-item-desc">High</span>
                                     </p>
                                     <p>
-                                        High: {Math.round(today.temperatureHigh)}&#176;
-                                    </p>
-                                    <p>
-                                        Low: {Math.round(today.temperatureLow)}&#176;
+                                        {Math.round(today.temperatureLow)}&#176;
+                                        <br /><span className="sub-item-desc">Low</span>
                                     </p>
                                 </div>
                                 
                                 <div>
-                                    <h5>Precipitation:</h5>
+                                    {/* <h5>Precip:</h5> */}
                                     <p>
-                                        Type: {today.precipType
+                                        {today.precipType
                                         ? today.precipType
                                         : 'none'}
                                     </p>
                                     <p>
-                                        Chance: {toPercent(today.precipProbability)}%
+                                        {toPercent(today.precipProbability)}%
+                                        <br /><span className="sub-item-desc">Chance</span>
                                     </p>
                                 </div>
                                 <div>
-                                    <h5>Sun:</h5>
+                                    {/* <h5>Sun:</h5> */}
                                     <p>
-                                        Sunrise: {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        <br /><span className="sub-item-desc">Sunrise</span>
                                     </p>
                                     <p>
-                                        Sunset: {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                        <br /><span className="sub-item-desc">Sunset</span>
                                     </p>
                                 </div>
                                 <div>
                                     <h5>Wind: MPH</h5>
                                     <p>
-                                        Speed: {today.windSpeed.toFixed(1)}
+                                        {today.windSpeed.toFixed(1)}
+                                        <br /><span className="sub-item-desc">Speed</span>
                                     </p>
                                     <p>
-                                        Gust: {today.windGust.toFixed(1)}
+                                        {today.windGust.toFixed(1)}
+                                        <br /><span className="sub-item-desc">Gust</span>
                                     </p>
                                     <p>
-                                        Direction: {today.windBearing}&#176;
+                                        {today.windBearing}&#176;
+                                        <br /><span className="sub-item-desc">Direction</span>
                                     </p>
                                 </div>
-                                <div>
-                                    <h5>Other:</h5>
+                                {/* <div> */}
+                                    {/* <h5>Other:</h5> */}
                                     <p>
-                                        Cloud Cover: {toPercent(today.cloudCover)}%
+                                        {toPercent(today.cloudCover)}%
+                                        <br /><span className="sub-item-desc">Cloud Cover</span>
                                     </p>
                                     <p>
-                                        Pressure: {today.pressure}
+                                        {today.pressure}
+                                        <br /><span className="sub-item-desc">Pressure</span>
                                     </p>
-                                </div>
-                                <div>
+                        
                                     <p>
-                                        Humidity: {toPercent(today.humidity)}%
+                                        {toPercent(today.humidity)}%
+                                        <br /><span className="sub-item-desc">Humidity</span>
                                     </p>
                                     <p>
-                                        Dew Point: {today.dewPoint.toFixed(1)}&#176;F
+                                        {today.dewPoint.toFixed(1)}&#176;F
+                                        <br /><span className="sub-item-desc">Dew Point</span>
                                     </p>
-                                </div>
+                                {/* </div> */}
                                     
                             </div>
                             <h3 className="align-center">
@@ -435,9 +299,6 @@ class Weather extends Component {
                                         Temp(deg):
                                     </p>
                                     <p>
-                                        Humidity:
-                                    </p>
-                                    <p>
                                         Precip:
                                     </p>
                                     <p>
@@ -452,21 +313,34 @@ class Weather extends Component {
                                     <p>
                                         Direction(deg):
                                     </p>
+                                    <p>
+                                        Humidity:
+                                    </p>
                                 </div>
                                 <div className="Weather-hourly-map">
                                     {hourlyMap}
                                 </div>
                             </div>
                             <h3 className="align-center">This Week:</h3>
-                            {thisWeekMap}
-                                
+                            <div className="This-week-map-container">
+                                {thisWeekMap}
+                            </div>
+                            <div className="Margin-bottom-50"></div>
+
+                            {/* {this.state.isNightTime
+                            ?<div className="Background-color-night">{starsMap}</div>
+                            :''} */}
+                            
                         </div>
-                    :this.state.loading}
+                    :<div className="Loading">
+                        {this.state.loading}
+                    </div>}
                         
                         {/* {help.forecast.currently} */}
                         {/* {this.state.weatherData.forecast.currently.temperature} */}
                     </div>
                 </div>
+                <Footer />
     		</div>
     	);
     }

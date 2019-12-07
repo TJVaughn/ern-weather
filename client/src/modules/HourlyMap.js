@@ -10,11 +10,38 @@ import veryWindyImg from '../images/very-windy.png'
 import { toPercent } from './utils'
 
 let hourlyMap = []
-// let lightSnowArr = ["light snow"]
-// let lightSnowSplitArr = lightSnowArr.split('');
-// filter((i) => {
-//     if (i === )
-// })
+
+const HourlyTableHead = () => {
+return (<div className="Weather-hourly-table-head">
+<h5>Time:</h5>
+<p>
+
+</p>
+<p>
+    Summary:
+</p>
+<p>
+    Temp(deg):
+</p>
+<p>
+    Precip:
+</p>
+<p>
+    % Chance: 
+</p>
+<p>
+    Wind(mph):
+</p>
+<p>
+    Gust(mph):
+</p>
+<p>
+    Direction(deg):
+</p>
+<p>
+    Humidity:
+</p>
+</div>)}
 
 const handleHourlyIcon = (summary, wind, precipType, precipProb) => {
     let icon = summary.toLowerCase();
@@ -85,4 +112,4 @@ const handleHourlyMap = (array) => {
         )
 }
 
-export { handleHourlyMap, hourlyMap };
+export { handleHourlyMap, HourlyTableHead, hourlyMap };

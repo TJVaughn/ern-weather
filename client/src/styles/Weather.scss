@@ -1,16 +1,9 @@
-.Weather-container{
-    // background-color: #fff;
-    @media only screen and(max-width: 765px){
-        height: 375px;
-        overflow: scroll;
-    }
-} 
+
 .Weather-location{
     font-size: 1.1em;
     margin: 10px 5px;
 }
 .Alert-button{
-    // background-color: #fff;
     font-size: 1.2em;
     background-color: rgb(151, 2, 2);
     color: #fff;
@@ -23,13 +16,9 @@
 }
 
 .Weather-hourly-data {
-    // background-color: #fff;
-
     text-align: center;
     display: grid;
-
     grid-template-columns: 105px auto;
-    // grid-template-rows: repeat(10, 50px);
     font-size: 1em;
     @media only screen and(max-width: 765px){
         grid-template-columns: 90px auto;
@@ -45,23 +34,17 @@
     p {
         margin: 0;
         padding: 2px;
-        // background-color: #fff;
-        // border: 1px solid #999;
     }
     .Weather-hourly-table-head {
-        // background-color: #fff;
         display: grid;
         grid-template-rows: repeat(10, 40px);
     }
     .Weather-hourly-map{
-        // background-color: #fff;
-
         display: grid;
         grid-template-columns: repeat(170, 17%);
         grid-template-rows: 100%;
         overflow: scroll;
         height: 410px;
-        // font-size: 0.9em;
         @media only screen and(max-width: 765px){
             grid-template-columns: repeat(170, 20%);
         }
@@ -71,11 +54,9 @@
         @media only screen and(max-width: 340px){
             grid-template-columns: repeat(170, 26%);
         }
-        
         p {
             margin: 0;
             padding: 5px;
-            // border: 1px solid #999;
         }
         .Hourly-map {
             display: grid;
@@ -96,7 +77,6 @@
     font-size: 0.8em;
 }
 .Weather-today-outer {
-    // background-color: #fff;
     padding: 5px;
     margin: 5px;
     display: grid;
@@ -107,11 +87,9 @@
     text-align: center;
     div {
         padding: 0 10px;
-        // border: 1px solid #122bd8;
     }
     
     @media only screen and(max-width: 550px){
-        // grid-template-columns: repeat(3, 33.33%);
         div {
             padding: 2px;
         }
@@ -119,15 +97,12 @@
 }
 
 .Loading {
-    background-color: #fff;
-
     font-size: 1.2em;
     text-align: center;
     margin: 15px;
 
 }
 .This-week-map-container {
-    // background-color: #fff;
     padding: 20px 0;
     @media only screen and(max-width: 780px){
         overflow: scroll;
@@ -156,12 +131,4 @@
         }
         
     }
-}
-
-.Weather-stars {
-    position: fixed;
-    height: 3px;
-    width: 3px;
-    border-radius: 50%;
-    z-index: -1;
 }
