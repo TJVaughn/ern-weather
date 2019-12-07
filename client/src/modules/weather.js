@@ -4,7 +4,9 @@ import { callAlertsMap, alertsMap } from './Alerts';
 import { callDayMap, thisWeekMap } from './CallDayMap';
 import { handleHourlyMap, hourlyMap } from './HourlyMap';
 import { setSearchCookie, getSearchCookie } from './cookies'
-import { starsMap, handleGenStars } from './Stars';
+// import { starsMap, handleGenStars } from './Stars';
+import Footer from './Footer'
+
 import ReactGA from 'react-ga';
 
 ReactGA.initialize('UA-136509113-9');
@@ -17,8 +19,8 @@ let alerts = []
 let hourlyArray = []
 let today = []
 let userSearch = ''
-let todayCurrentTime = ''
-let todaySunsetTime = ''
+// let todayCurrentTime = ''
+// let todaySunsetTime = ''
 
 class Weather extends Component {
     constructor(props){
@@ -83,16 +85,16 @@ class Weather extends Component {
             this.setState({alertContentSwitch: false})
         }
     }
-    dayOrNight(sunset, current){
-        console.log("Hello from day or night")
-        if(sunset < current){
-            this.setState({isNightTime: true})
-        } else {
-            this.setState({isNightTime: false})
-        }
-    }
+    // dayOrNight(sunset, current){
+    //     console.log("Hello from day or night")
+    //     if(sunset < current){
+    //         this.setState({isNightTime: true})
+    //     } else {
+    //         this.setState({isNightTime: false})
+    //     }
+    // }
     componentDidMount(){
-        handleGenStars()
+        // handleGenStars()
         userSearch = getSearchCookie('search')
         if(userSearch === '') {
             return '';
@@ -132,11 +134,11 @@ class Weather extends Component {
             this.setState({switch: true})
             //Because everything has worked at this point, we will reset error switch to false
             this.setState({errorSwitch: false})
-            todayCurrentTime = new Date()
-            todaySunsetTime = new Date(today.sunsetTime * 1000)
-            console.log(todaySunsetTime, "sunset")
-            console.log(todayCurrentTime, "current")
-            this.dayOrNight(todaySunsetTime, todayCurrentTime)
+            // todayCurrentTime = new Date()
+            // todaySunsetTime = new Date(today.sunsetTime * 1000)
+            // console.log(todaySunsetTime, "sunset")
+            // console.log(todayCurrentTime, "current")
+            // this.dayOrNight(todaySunsetTime, todayCurrentTime)
             // if(todayCurrentTime > todaySunsetTime) {
  
         }).catch(err => console.log(err))
@@ -144,11 +146,15 @@ class Weather extends Component {
     
     render(){
     	return(
-    		<div>
+    		<div className="Margin-div">
+                <h2>Whether App</h2>
+                <p className="sub-item-desc">
+                    Find out whether you want to go outside or not
+                </p>
                 {this.state.isNightTime
                 ?<div className="Background-color-night"></div>
                 :''}
-                {/*  */}
+
                 {/* FORM TO HANDLE SEARCH INPUT */}
     			<form onSubmit={this.handleSubmit}>
                     <label>Location: </label>
@@ -162,15 +168,15 @@ class Weather extends Component {
                     ? <h4>"Sorry, check your connection or provide a valid search term"</h4>
                     :''}
 
-
+                    <p className="Weather-location">
+                        {weatherArray.name}
+                    </p>
                     <div>
                         {/* RENDERS ALL THE CONTENT IF ITS BEEN FETCHED, OR loading state */}
                         {this.state.switch
-                        ? <div>
+                        ? <div className="Weather-container">
 
-                            <p className="Weather-location">
-                                {weatherArray.name}
-                            </p>
+                            
 
                             {this.state.alertSwitch
                             ?<div>
@@ -319,6 +325,12 @@ class Weather extends Component {
                             <div className="This-week-map-container">
                                 {thisWeekMap}
                             </div>
+                            <div className="Margin-bottom-50"></div>
+
+                            {/* {this.state.isNightTime
+                            ?<div className="Background-color-night">{starsMap}</div>
+                            :''} */}
+                            
                         </div>
                     :<div className="Loading">
                         {this.state.loading}
@@ -328,10 +340,7 @@ class Weather extends Component {
                         {/* {this.state.weatherData.forecast.currently.temperature} */}
                     </div>
                 </div>
-                {this.state.isNightTime
-                ?<div className="Background-color-night">{starsMap}</div>
-                :''}
-                
+                <Footer />
     		</div>
     	);
     }

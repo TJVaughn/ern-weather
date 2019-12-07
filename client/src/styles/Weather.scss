@@ -1,39 +1,16 @@
 .Weather-container{
-    background-color: #fff;
-
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-    p{
-        padding: 5px;
-        border: 1px solid #122bd8;
-        border-radius: 20px;
-        margin: 5px;
+    // background-color: #fff;
+    @media only screen and(max-width: 765px){
+        height: 375px;
+        overflow: scroll;
     }
 } 
-.Weather-content-container {
-    background-color: #fff;
-
-    overflow: scroll;
-    
-}
-// .Alert-title{
-//     background-color: #555;
-//     color: #f55;
-// }
-// .Alert-desc {
-    
-// }
 .Weather-location{
-    // background-color: #fff;
-    // color: #ccc;
-    font-size: 1.3em;
+    font-size: 1.1em;
     margin: 10px 5px;
 }
 .Alert-button{
-    background-color: #fff;
-
+    // background-color: #fff;
     font-size: 1.2em;
     background-color: rgb(151, 2, 2);
     color: #fff;
@@ -46,7 +23,7 @@
 }
 
 .Weather-hourly-data {
-    background-color: #fff;
+    // background-color: #fff;
 
     text-align: center;
     display: grid;
@@ -68,16 +45,16 @@
     p {
         margin: 0;
         padding: 2px;
-        background-color: #fff;
+        // background-color: #fff;
         // border: 1px solid #999;
     }
     .Weather-hourly-table-head {
-        background-color: #fff;
+        // background-color: #fff;
         display: grid;
         grid-template-rows: repeat(10, 40px);
     }
     .Weather-hourly-map{
-        background-color: #fff;
+        // background-color: #fff;
 
         display: grid;
         grid-template-columns: repeat(170, 17%);
@@ -115,9 +92,11 @@
     }
 
 }
-
+.sub-item-desc {
+    font-size: 0.8em;
+}
 .Weather-today-outer {
-    background-color: #fff;
+    // background-color: #fff;
     padding: 5px;
     margin: 5px;
     display: grid;
@@ -130,9 +109,7 @@
         padding: 0 10px;
         // border: 1px solid #122bd8;
     }
-    .sub-item-desc {
-        font-size: 0.8em;
-    }
+    
     @media only screen and(max-width: 550px){
         // grid-template-columns: repeat(3, 33.33%);
         div {
@@ -150,7 +127,7 @@
 
 }
 .This-week-map-container {
-    background-color: #fff;
+    // background-color: #fff;
     padding: 20px 0;
     @media only screen and(max-width: 780px){
         overflow: scroll;
@@ -167,7 +144,7 @@
     .This-week-map {
         border: 1px solid #ffffff00;
         border-radius: 5px;
-        box-shadow: #aaa 5px 5px 5px;
+        box-shadow:#aaa -5px -5px -5px;
         text-align: center;
         margin: 10px 20px;
         @media only screen and(max-width: 550px){
@@ -183,11 +160,8 @@
 
 .Weather-stars {
     position: fixed;
-    height: 4px;
-    width: 4px;
-    background-color: #fff;
+    height: 3px;
+    width: 3px;
     border-radius: 50%;
-    // top: 5px;
-    // right: 5px;
     z-index: -1;
 }

@@ -18,8 +18,8 @@ class Footer extends Component {
     }
     render(){
     	return(
-    		<div>
-    			<div className="footer">
+    		<div className="footer">
+    			<div>
                     <hr />
                     Created by <a href="https://vaughnwebdevelopment.com">Trevor Vaughn</a> <br />
                 </div>
@@ -32,7 +32,7 @@ class Footer extends Component {
                             that's it! <button>Accept</button>
                     </div>
                     :''}
-                    <div className="Margin-bottom-50"></div>
+                    {/* <div className="Margin-bottom-50"></div> */}
     		</div>
     	);
     }

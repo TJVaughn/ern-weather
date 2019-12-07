@@ -37,7 +37,8 @@ h1, h2, h3, h4, h5, h6{
   background-color: #fff;
 
   // color: #ccc;
-  margin: 3px 0;
+  margin: 0px 0;
+  padding: 5px 0px;
 }
 p {
   background-color: #fff;
@@ -58,10 +59,13 @@ a:visited {
   background-color: #fff;
 
   display: block;
-  margin: 10px auto;
-  // position: relative;
-  // bottom: 20px;
-  font-size: 1.2em;
+  margin: 0;
+  padding: 5px;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  font-size: 0.8em;
   // width: 60%;
 }
 .header a {
