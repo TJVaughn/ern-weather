@@ -19,6 +19,7 @@ let hourlyArray = []
 let today = []
 let userSearchCookie = ''
 let todaySunsetTime = '';
+let todaySunriseTime = ''
 let todayCurrentTime = '';
 
 class Weather extends Component {
@@ -39,9 +40,9 @@ class Weather extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleAlertContent = this.handleAlertContent.bind(this);
     }
-    dayOrNight(sunset, current){
+    dayOrNight(sunset, sunrise, current){
         // console.log("Hello from day or night")
-        if(sunset < current){
+        if(sunset < current || current < sunrise){
             this.setState({isNightTime: true, nightModeClass: 'Night-mode'})
         } else {
             this.setState({isNightTime: false, nightModeClass: ''})
@@ -71,7 +72,8 @@ class Weather extends Component {
             }
             todayCurrentTime = new Date()
             todaySunsetTime = new Date(today.sunsetTime * 1000)
-            this.dayOrNight(todaySunsetTime, todayCurrentTime);
+            todaySunriseTime = new Date(today.sunriseTime * 1000)
+            this.dayOrNight(todaySunsetTime, todaySunriseTime, todayCurrentTime);
             this.setState({error: res.error})
             // We will remove the loading message
             this.setState({loading: ''})

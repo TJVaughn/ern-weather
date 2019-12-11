@@ -37,7 +37,7 @@ const callDayMap = (array) => {
                 </p>
                 <div className="This-week-map-inner">
                     <div>
-                        <h6>Temp: F</h6>
+                        {/* <h6>Temp: F</h6> */}
                         <p>
                             {Math.round(item.temperatureHigh)}&#176;
                             <br /><span className="sub-item-desc">High</span>
@@ -49,7 +49,7 @@ const callDayMap = (array) => {
                     </div>
                     <div>
                 
-                        <h6>Sun:</h6>
+                        {/* <h6>Sun:</h6> */}
                 
                         <p>
                             {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
@@ -61,7 +61,7 @@ const callDayMap = (array) => {
                         </p>
                     </div>
                     <div>
-                        <h6>Precip:</h6>
+                        {/* <h6>Precip:</h6> */}
                         <p>
                             {item.precipType
                             ? item.precipType
@@ -102,10 +102,10 @@ const callDayMap = (array) => {
                             {toPercent(item.humidity)}%
                             <br /><span className="sub-item-desc">Humidity</span>
                         </p>
-                        <p>
+                        {/* <p>
                             {item.dewPoint.toFixed(1)}&#176;F
                             <br /><span className="sub-item-desc">Dew Point</span>
-                        </p>
+                        </p> */}
                     </div>
                 </div>
             </div>
