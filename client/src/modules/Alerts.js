@@ -13,4 +13,4 @@ const callAlertsMap = (alerts) => {
         </div>
     )
 }
-export {callAlertsMap, alertsMap };
+export { callAlertsMap, alertsMap };

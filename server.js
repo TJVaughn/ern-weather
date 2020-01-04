@@ -11,6 +11,7 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.get('/user', (req, res) => {
     return res.send({
         userIP: req.connection.remoteAddress
@@ -45,7 +46,15 @@ app.get('/weather', (req, res) => {
     });
 })
 
+const forceSSL = (req, res, next) => {
+    if(req.headers === ['x-forwarded-proto'] !== 'https'){
+        return res.redirect(301, ['https://', req.get('Host'), req.url].join(''))
+    }
+    return next();
+}
+
 if (process.env.NODE_ENV === 'production') {
+    app.use(forceSSL)
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'client/build')));
       
