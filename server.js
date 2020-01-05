@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const forceSSLAndWWW = (req, res, next) => {
     console.log(req.headers)
 
-    if(process.env.NODE_ENV === 'production' && req.header('host') !== 'https://www.whetherapp.co/'){
+    if(process.env.NODE_ENV === 'production' && req.header('host') !== 'www.whetherapp.co'){
         res.redirect(301, 'https://www.whetherapp.co')
     }
 
