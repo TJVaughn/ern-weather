@@ -48,7 +48,7 @@ app.get('/weather', (req, res) => {
 
 const forceSSL = (req, res, next) => {
     if(req.headers === ['x-forwarded-proto'] !== 'https'){
-        return res.redirect(301, ['https://www.', req.get('Host'), req.url].join(''))
+        return res.redirect(301, 'https://www.whetherapp.co' + req.url)
     }
     return next();
 }
