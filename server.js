@@ -11,6 +11,16 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const forceSSL = (req, res, next) => {
+    if(process.env.NODE_ENV === 'production' && req.headers['X-Forwarded-Proto'] !== 'https'){
+        console.log(req.hostname)
+        console.log(req.url)
+        return res.redirect(301, 'https://' + req.hostname + req.url)
+    }
+    return next();
+}
+app.use(forceSSL)
+
 
 app.get('/user', (req, res) => {
     return res.send({
@@ -46,21 +56,14 @@ app.get('/weather', (req, res) => {
     });
 })
 
-const forceSSL = (req, res, next) => {
-    if(req.headers['X-Forwarded-Proto'] !== 'https'){
-        return res.redirect(301, 'https://' + req.headers.host + req.url)
-    }
-    return next();
-}
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(forceSSL)
+    
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'client/build')));
       
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
-        console.log(req.ip)
       res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
     });
   }
