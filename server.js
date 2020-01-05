@@ -11,25 +11,23 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const forceWWW = (req, res, next) => {
+const forceSSLAndWWW = (req, res, next) => {
+    console.log(req.headers)
+
     if(process.env.NODE_ENV === 'production' && req.header('host') !== 'https://www.whetherapp.co/'){
         res.redirect(301, 'https://www.whetherapp.co')
     }
-}
-app.use(forceWWW)
 
-const forceSSL = (req, res, next) => {
-    console.log(req.headers)
     if(process.env.NODE_ENV === 'production' && req.header('x-forwarded-proto') !== 'https'){
         console.log(req.hostname)
         console.log(req.url)
         // return res.redirect(301, 'https://' + req.hostname)
         return res.redirect(301, `https://${req.hostname}`)
-
     }
+
     return next();
 }
-app.use(forceSSL)
+app.use(forceSSLAndWWW)
 
 
 app.get('/user', (req, res) => {
