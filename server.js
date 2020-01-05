@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const forceSSL = (req, res, next) => {
-    console.log(req.headers('x-forwarded-proto'))
+    console.log(req.header('x-forwarded-proto'))
     // if(process.env.NODE_ENV === 'production' && req.headers('x-forwarded-proto') !== 'https'){
         console.log(req.hostname)
         console.log(req.url)
