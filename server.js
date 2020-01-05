@@ -13,11 +13,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const forceSSL = (req, res, next) => {
     console.log(req.header('x-forwarded-proto'))
-    // if(process.env.NODE_ENV === 'production' && req.headers('x-forwarded-proto') !== 'https'){
+    if(process.env.NODE_ENV === 'production' && req.header('x-forwarded-proto') !== 'https'){
         console.log(req.hostname)
         console.log(req.url)
-        // return res.redirect(301, 'https://' + req.hostname + req.url)
-    // }
+        // return res.redirect(301, 'https://' + req.hostname)
+        return res.redirect(301, `https://${req.hostname}`)
+
+    }
     return next();
 }
 app.use(forceSSL)
