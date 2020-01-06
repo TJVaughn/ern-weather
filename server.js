@@ -22,7 +22,7 @@ const forceSSLAndWWW = (req, res, next) => {
         console.log(req.hostname)
         console.log(req.url)
         // return res.redirect(301, 'https://' + req.hostname)
-        return res.redirect(301, `https://${req.hostname}`)
+        return res.redirect(301, `https://${req.header('host')}`)
     }
 
     return next();
