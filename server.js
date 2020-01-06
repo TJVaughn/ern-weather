@@ -15,7 +15,7 @@ const forceSSLAndWWW = (req, res, next) => {
     if(process.env.NODE_ENV === 'production'){
         console.log(req.headers)
         if(req.header('x-forwarded-proto') === 'http') {
-            return res.redirect(301, `https://www.whetherapp.co}`)
+            return res.redirect(301, `https://www.whetherapp.co`)
         }
     }
 
