@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { toPercent } from './utils'
+import Chart from 'react-google-charts'
+import PieChart from './today/PieChart'
 
 let today = ''
 let curr = ''
@@ -8,53 +10,93 @@ const handleToday = (currArr, todayArr) => {
     curr = currArr;
 }
 
+
 class TodayComp extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            wind: true
+        }
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick(){
+        if(this.state.wind){
+            return this.setState({wind: false})
+        }
+        this.setState({wind: true})
+    }
+
     render(){
     	return(
     		<div>
                 <h3 className="align-center">{today.summary}</h3>
-                <p>
-                    
-                </p>
-                <div className="Weather-today-outer">
-                    
-                    <div>
+                <div>
+                    <div className="Weather-today-outer fade-in">
                         {/* <h5>Temp: F</h5> */}
                         <p>
                             {Math.round(curr.temperature)}&#176;
                             <br /><span className="sub-item-desc">Current</span>
                         </p>
                         <p>
-                            {Math.round(curr.apparentTemperature)}&#176;
-                            <br /><span className="sub-item-desc">Feels like</span>
-                        </p>
-                        
-                    </div>
-                    <div>
-                        <p>
                             {Math.round(today.temperatureHigh)}&#176;
                             <br /><span className="sub-item-desc">High</span>
+                        </p>
+                        <p>
+                            {Math.round(curr.apparentTemperature)}&#176;
+                            <br /><span className="sub-item-desc">Feels like</span>
                         </p>
                         <p>
                             {Math.round(today.temperatureLow)}&#176;
                             <br /><span className="sub-item-desc">Low</span>
                         </p>
                     </div>
-                    
-                    <div>
-                        {/* <h5>Precip:</h5> */}
-                        <p>
-                            {today.precipType
-                            ? today.precipType
-                            : 'none'}
-                        </p>
-                        <p>
-                            {toPercent(today.precipProbability)}%
-                            <br /><span className="sub-item-desc">Chance</span>
-                        </p>
+                    <h3 className="align-center">Chance of {today.precipType
+                        ? today.precipType
+                        : 'precipitation'}
+                    </h3>
+                    <div className="Weather-today-pie-outer fade-in">
+                        <PieChart 
+                            content={toPercent(today.precipProbability) + '%'}
+                            data={[toPercent(today.precipProbability), 100 - toPercent(today.precipProbability)]}
+                            // pieColors={['#12d1b8', "#fff0"]}
+                        />
                     </div>
-                    <div>
-                        {/* <h5>Sun:</h5> */}
+                        
+                    <h3 className='align-center'>Wind</h3>
+                    {/* <p className="align-center">MPH</p> */}
+                    <p className="align-center">
+                        click or tap
+                    </p>
+                    <div onClick={this.handleClick}>
+                    {this.state.wind
+                            ? <div className="Weather-today-pie-outer">
+                            
+                        <div> 
+                        <PieChart 
+                            content={today.windSpeed.toFixed(0) + 'mph'}
+                            data={[(today.windBearing / 360 * 100) - 1, 3, 97 - (today.windBearing / 360 * 100)]}
+                        />
+                        
+                        </div>
+                            </div>
+
+                            : <div className="Weather-today-pie-outer">
+                                
+                        <div> 
+                        <PieChart 
+                            content={today.windGust.toFixed(0) + 'mph'}
+                            data={[(today.windBearing / 360 * 100) - 1, 3, 97 - (today.windBearing / 360 * 100)]}
+                        />
+                   
+                        </div>
+                                </div>}
+
+                        
+                    </div>
+                    <h3 className="align-center">Circadian</h3>
+
+                    <div className="Weather-today-circadian">
                         <p>
                             {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
                             <br /><span className="sub-item-desc">Sunrise</span>
@@ -64,23 +106,10 @@ class TodayComp extends Component {
                             <br /><span className="sub-item-desc">Sunset</span>
                         </p>
                     </div>
-                    <div>
-                        <h5>Wind: MPH</h5>
-                        <p>
-                            {today.windSpeed.toFixed(1)}
-                            <br /><span className="sub-item-desc">Speed</span>
-                        </p>
-                        <p>
-                            {today.windGust.toFixed(1)}
-                            <br /><span className="sub-item-desc">Gust</span>
-                        </p>
-                        <p>
-                            {today.windBearing}&#176;
-                            <br /><span className="sub-item-desc">Direction</span>
-                        </p>
-                    </div>
-                    {/* <div> */}
-                        {/* <h5>Other:</h5> */}
+
+                    <h3 className="align-center">Other:</h3>
+                    <div className="Weather-today-other">
+                        
                         <p>
                             {toPercent(today.cloudCover)}%
                             <br /><span className="sub-item-desc">Cloud Cover</span>
@@ -98,7 +127,7 @@ class TodayComp extends Component {
                             {today.dewPoint.toFixed(1)}&#176;F
                             <br /><span className="sub-item-desc">Dew Point</span>
                         </p>
-                    {/* </div> */}
+                    </div>
                         
                 </div>
             </div> 

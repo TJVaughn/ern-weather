@@ -76,25 +76,7 @@
 .sub-item-desc {
     font-size: 0.8em;
 }
-.Weather-today-outer {
-    padding: 5px;
-    margin: 5px;
-    display: grid;
-    grid-template-columns: repeat(5, 20%);
-    // border: 1px solid #122bd8;
-    border-radius: 5px;
-    box-shadow: #122bd8 4px 4px 4px;
-    text-align: center;
-    div {
-        padding: 0 10px;
-    }
-    
-    @media only screen and(max-width: 550px){
-        div {
-            padding: 2px;
-        }
-    }
-}
+
 
 .Loading {
     font-size: 1.2em;

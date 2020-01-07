@@ -73,3 +73,16 @@ a:visited {
 .Margin-bottom-50 {
   margin-bottom: 50px;
 }
+
+.fade-in {
+  animation: FADEIN 1s linear;
+}
+
+@keyframes FADEIN {
+  from {
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
