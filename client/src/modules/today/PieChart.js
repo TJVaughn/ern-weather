@@ -7,6 +7,11 @@ class PieChart extends Component {
 	// 		data: [25, 75]
 	// 	}
 	// }
+	static defaultProps = {
+		colors: [
+			'#43A19E', '#7B43A1', '#F2317A', '#FF9824', '#58CF6C'
+		]
+	}
 	getInitialState() {
 		return {
 			data: [25, 75]
@@ -26,7 +31,7 @@ class PieChart extends Component {
 	}
 
 	render() {
-		var colors = ['#43A19E', '#7B43A1', '#F2317A', '#FF9824', '#58CF6C'];
+		// var colors = ['#43A19E', '#7B43A1', '#F2317A', '#FF9824', '#58CF6C'];
 
 		return (
 		  <div>
@@ -35,7 +40,7 @@ class PieChart extends Component {
 				data={ this.props.data }
 				radius={ 100 }
 				hole={ 55 }
-				colors={ ['#12d1b8', '#fff0', '#12d1b8'] }
+				colors={ this.props.colors }
 				strokeWidth={ 1 }
 				content={this.props.content}
 				fill={'#000'}
@@ -188,7 +193,7 @@ class Slice extends Component {
 						{ this.props.percent ? this.props.percentValue + '%' : this.props.value }
 					</text>
 				: null }
-        <text x={100} y={100} fill="#fff" textAnchor="middle">
+        <text x={100} y={100} fill="#888" textAnchor="middle">
           {this.props.content}
         </text>
 			</g>

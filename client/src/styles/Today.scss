@@ -9,6 +9,7 @@
     text-align: center;
     div {
         padding: 0 10px;
+        background-color: linear-gradient(#b44, #b3f);
     }
     
     @media only screen and(max-width: 550px){
@@ -60,7 +61,7 @@
     p {
         margin: auto;
         padding: 0 10px;
-
+        
     }
 }
 .Weather-today-circadian {
@@ -70,6 +71,7 @@
     p{
         padding: 0 10px;
         margin: 20px 0;
+        
     }
 }
 
@@ -78,6 +80,10 @@
 }
 #reactgooglegraph-1 > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > svg:nth-child(1) > g:nth-child(3) > text:nth-child(1) {
     font-size: 1.2em;
+}
+.Weather-container > div:nth-child(1) > div:nth-child(2) > div:nth-child(8) > svg:nth-child(1) > g:nth-child(1) > path:nth-child(1){
+    background-color: linearGradient(#000, rgb(38, 166, 240));
+    color: linear-gradient(#b44, #b3f);
 }
 // div.Weather-today-pie-outer:nth-child(1) > div:nth-child(1) > div:nth-child(1) > svg:nth-child(1){
 //     transform: rotate(-90deg);
