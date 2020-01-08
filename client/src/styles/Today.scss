@@ -7,14 +7,14 @@
     border-radius: 5px;
     box-shadow: #333 4px 4px 6px;
     text-align: center;
-    background: linear-gradient(45deg, #b44, #b3f);
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
     font-size: 1.2em;
     div {
         padding: 0 10px;
         
     }
     div > svg{
-        background: linear-gradient(90deg, #b3f, #b44);
+        background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
         border-radius: 50%;
     }
     
@@ -77,12 +77,12 @@
 }
 
 div.Weather-today-pie-outer div svg{
-    background: linear-gradient(30deg, #b3f, #b44);
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
     border-radius: 50%;
     box-shadow: #333 4px 4px 6px;
 }
 div.Weather-today-circadian:nth-child(9) > div:nth-child(1) > svg:nth-child(1){
-    background: linear-gradient(330deg, #b3f, #b44);
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
     border-radius: 50%;
     box-shadow: #333 4px 4px 6px;
 }

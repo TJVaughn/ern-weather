@@ -19,6 +19,13 @@
     cursor: pointer;
     text-align: center;
 }
+.Alert-content {
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
+    border-radius: 5px;
+    padding: 5px;
+    // width: max-content;
+    box-shadow: #333 4px 4px 6px;
+}
 
 .Weather-hourly-data {
     text-align: center;
@@ -116,7 +123,7 @@
     // box-shadow: -3px -3px 5px #333, 4px 4px 5px #222, -4px 4px 5px #333, 4px -4px 5px #222;
     text-align: center;
     margin: 10px 20px;
-    background: linear-gradient(30deg,  rgb(155, 81, 240), #4ab);
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
     @media only screen and(max-width: 550px){
         margin: 10px 5px;
     }

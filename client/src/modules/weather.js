@@ -112,7 +112,7 @@ class Weather extends Component {
     
     render(){
     	return(
-    		<div className={`${this.state.nightModeClass}`}>
+    		<div className={`${this.state.nightModeClass} App`}>
                 <div className="Margin-div">
                     <h2>Whether App</h2>
                     <p className="sub-item-desc">
@@ -145,7 +145,7 @@ class Weather extends Component {
                                 </div>
  
                                 {this.state.alertContentSwitch
-                                ? <div>
+                                ? <div className="Alert-content">
                                     <h4>Alerts:</h4>
                                     {alertsMap}
                                 </div>
