@@ -20,6 +20,8 @@
     display: grid;
     grid-template-columns: 105px auto;
     font-size: 1em;
+    background: linear-gradient(45deg, rgb(250, 56, 56), rgb(69, 226, 129), rgb(247, 247, 36));
+    border-radius: 5px;
     @media only screen and(max-width: 765px){
         grid-template-columns: 90px auto;
         font-size: 0.9em;
@@ -103,9 +105,10 @@
 .This-week-map {
     border: 1px solid #ffffff00;
     border-radius: 5px;
-    box-shadow: -3px -3px 5px #aaa, 4px 4px 10px #11a;
+    box-shadow: -3px -3px 5px #333, 4px 4px 5px #222, -4px 4px 5px #333, 4px -4px 5px #222;
     text-align: center;
     margin: 10px 20px;
+    background: linear-gradient(0deg, rgb(85, 99, 255), rgb(85, 161, 23));
     @media only screen and(max-width: 550px){
         margin: 10px 5px;
     }
