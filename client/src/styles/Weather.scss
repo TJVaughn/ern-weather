@@ -2,6 +2,11 @@
 .Weather-location{
     font-size: 1.1em;
     margin: 10px 5px;
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
+    border-radius: 5px;
+    padding: 5px;
+    width: max-content;
+    box-shadow: #333 4px 4px 6px;
 }
 .Alert-button{
     font-size: 1.2em;
@@ -20,8 +25,9 @@
     display: grid;
     grid-template-columns: 105px auto;
     font-size: 1em;
-    background: linear-gradient(45deg, rgb(250, 56, 56), rgb(69, 226, 129), rgb(247, 247, 36));
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
     border-radius: 5px;
+    box-shadow: #333 4px 4px 6px;
     @media only screen and(max-width: 765px){
         grid-template-columns: 90px auto;
         font-size: 0.9em;
@@ -70,6 +76,7 @@
                 border-radius: 50%;
                 height: 40px;
                 margin: 0 auto;
+                background-color: #fff5;
             }
         }
     }
@@ -105,10 +112,11 @@
 .This-week-map {
     border: 1px solid #ffffff00;
     border-radius: 5px;
-    box-shadow: -3px -3px 5px #333, 4px 4px 5px #222, -4px 4px 5px #333, 4px -4px 5px #222;
+    box-shadow: #333 4px 4px 6px;
+    // box-shadow: -3px -3px 5px #333, 4px 4px 5px #222, -4px 4px 5px #333, 4px -4px 5px #222;
     text-align: center;
     margin: 10px 20px;
-    background: linear-gradient(0deg, rgb(85, 99, 255), rgb(85, 161, 23));
+    background: linear-gradient(30deg,  rgb(155, 81, 240), #4ab);
     @media only screen and(max-width: 550px){
         margin: 10px 5px;
     }

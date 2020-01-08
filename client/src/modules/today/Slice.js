@@ -27,7 +27,9 @@ class Slice extends Component {
 		};
     }
     componentWillReceiveProps(){
-        this.animate();
+		if(this.props.animate){
+			return this.animate();
+		}
     }
     
     // static getDerivedStateFromProps() {
@@ -95,7 +97,7 @@ class Slice extends Component {
 						{ this.props.percent ? this.props.percentValue + '%' : this.props.value }
 					</text>
 				: null }
-        <text x={100} y={100} fill="#fff" textAnchor="middle">
+        <text x={this.props.radius} y={this.props.radius} fill="#fff" textAnchor="middle">
           {this.props.content}
         </text>
 			</g>

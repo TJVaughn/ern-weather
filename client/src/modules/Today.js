@@ -16,9 +16,21 @@ class TodayComp extends Component {
     constructor(props){
         super(props);
         this.state = {
-            wind: true
+            wind: true,
+            isAfterSunset: false,
+            isBeforeSunrise: false,
+            isDayTime: true
         }
         this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleDayOrNight(){
+        if(currTime < today.sunriseTime * 1000){
+            return this.setState({ isBeforeSunrise: true, isAfterSunset: false, isDayTime: false })
+        } else if(currTime > today.sunsetTime * 1000){
+            return this.setState({ isBeforeSunrise: false, isAfterSunset: true, isDayTime: false })
+        }
+        return this.setState({isDayTime: true})
     }
 
     handleClick(){
@@ -52,6 +64,9 @@ class TodayComp extends Component {
             return 0;
         }
         return today.sunriseTime * 1000 - currTime;
+    }
+    dayTime(){
+        return (today.sunsetTime * 1000) - (today.sunriseTime * 1000);
     }
 
     nightTime(){
@@ -135,7 +150,7 @@ class TodayComp extends Component {
                     </div>
 
                     <h3 className="align-center">Circadian</h3>
-                    <div className="Weather-today-circadian">
+                    <div className="Weather-today-circadian sunrise-sunset">
                         <p>
                             {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
                             <br /><span className="sub-item-desc">Sunrise</span>
@@ -146,33 +161,42 @@ class TodayComp extends Component {
                         </p>
                     </div>
                     <div className="Weather-today-circadian">
-                    <PieChart 
-                            
-                        // First part is sunset, followed by blank 50, followed by sunrise
-                            data={[
-                                currTime > today.sunsetTime * 1000
-                                ? this.timeFromSunset()
-                                : 0,
 
-                                currTime > today.sunsetTime * 1000
-                                ? this.nightTime() - this.timeFromSunset()
-                                : 0,
-
-                                currTime < today.sunriseTime * 1000
-                                ? this.nightTime() - this.timeToSunrise()
-                                : 0,
-
-                                currTime < today.sunriseTime * 1000
-                                ? this.timeToSunrise()
-                                : 0,
-
-                                this.timeFromSunrise(),
-                                this.timeToSunset()
-                            ]}
-                            colors={['#000', '#000', 'rgb(38, 166, 240)', 'rgb(38, 166, 240)', 'rgb(38, 166, 240)', 'rgb(38, 166, 240)']}
-                            startAngle={0}
+                        {this.state.isDayTime
+                        ? <PieChart 
+                            data={[this.nightTime(), this.timeFromSunrise(), this.timeToSunset()]}
+                            startAngle={340}
                             stroke={'#12d1b8'}
+                            colors={['#0004', '#fff5', '#fff5']}
+                            strokeWidth={2}
                         />
+                        : ''
+                        }
+                        {this.state.isAfterSunset
+                        ? <PieChart 
+                            data={[this.timeFromSunset(), 
+                            this.nightTime()- this.timeFromSunset(),
+                            this.dayTime()
+                        ]}
+                            startAngle={340}
+                            stroke={'#12d1b8'}
+                            colors={['#0004', '#fff5', '#fff5']}
+                            strokeWidth={2}
+                        />
+                        : ''}
+                        {this.state.isBeforeSunrise
+                        ? <PieChart 
+                        data={[ this.nightTime() - this.timeToSunrise(),
+                            this.timeToSunrise(),
+                            this.dayTime()
+                    ]}
+                        startAngle={340}
+                        stroke={'#12d1b8'}
+                        colors={['#0004', '#fff5', '#fff5']}
+                        strokeWidth={2}
+                    />
+                        : ''}
+                    
                        
                     </div>
                     

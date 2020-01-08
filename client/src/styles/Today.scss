@@ -58,6 +58,7 @@
     padding: 10px 0;
     background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
     border-radius: 5px;
+    box-shadow: #333 4px 4px 6px;
     p {
         margin: auto;
         padding: 0 10px;
@@ -78,8 +79,17 @@
 div.Weather-today-pie-outer div svg{
     background: linear-gradient(30deg, #b3f, #b44);
     border-radius: 50%;
+    box-shadow: #333 4px 4px 6px;
 }
 div.Weather-today-circadian:nth-child(9) > div:nth-child(1) > svg:nth-child(1){
     background: linear-gradient(330deg, #b3f, #b44);
     border-radius: 50%;
+    box-shadow: #333 4px 4px 6px;
+}
+.sunrise-sunset {
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
+    border-radius: 5px;
+    width: min-content;
+    margin: 10px auto;
+    box-shadow: #333 4px 4px 6px;
 }

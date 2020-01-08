@@ -19,6 +19,7 @@ class Pie extends Component {
 
 		sum = this.props.data.reduce(function (carry, current) { return carry + current }, 0);
 		startAngle = this.props.startAngle;
+		
 
 
 		return (
@@ -45,7 +46,8 @@ class Pie extends Component {
 						fill={ colors[sliceIndex % colorsLength] }
 						stroke={ self.props.stroke }
 						strokeWidth={ self.props.strokeWidth }
-            content={self.props.content}
+						content={self.props.content}
+						animate={self.props.animate}
 					/>
 				}) }
 

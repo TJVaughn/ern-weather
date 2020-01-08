@@ -1,5 +1,6 @@
 import React from 'react'
 import { toPercent } from './utils'
+import PieChart from './today/PieChart'
 
 let thisWeekMap = []
    
@@ -37,7 +38,7 @@ const callDayMap = (array) => {
                 </p>
                 <div className="This-week-map-inner">
                     <div>
-                        {/* <h6>Temp: F</h6> */}
+                        {/* <p>Temp: F</p> */}
                         <p>
                             {Math.round(item.temperatureHigh)}&#176;
                             <br /><span className="sub-item-desc">High</span>
@@ -49,7 +50,7 @@ const callDayMap = (array) => {
                     </div>
                     <div>
                 
-                        {/* <h6>Sun:</h6> */}
+                        {/* <p>Sun:</p> */}
                 
                         <p>
                             {new Date(item.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
@@ -61,7 +62,7 @@ const callDayMap = (array) => {
                         </p>
                     </div>
                     <div>
-                        {/* <h6>Precip:</h6> */}
+                        {/* <p>Precip:</p> */}
                         <p>
                             {item.precipType
                             ? item.precipType
@@ -73,22 +74,30 @@ const callDayMap = (array) => {
                         </p>
                     </div>
                     <div>
-                        <h6>Wind: MPH</h6>
-                        <p>
+                        <p>Wind: MPH</p>
+                        <PieChart 
+                            colors={['#fff0', '#fff', '#fff0']}
+                            data={[(item.windBearing / 360 * 100) - 1, 1, 98 - (item.windBearing / 360 * 100)]}
+                            content={item.windSpeed.toFixed(1)}
+                            radius={25}
+                            animate={false}
+                            hole={10}
+                        />
+                        {/* <p>
                             {item.windSpeed.toFixed(1)}
                             <br /><span className="sub-item-desc">Speed</span>
-                        </p>
+                        </p> */}
                         <p>
                             {item.windGust.toFixed(1)}
                             <br /><span className="sub-item-desc">Gust</span>
                         </p>
-                        <p>
+                        {/* <p>
                             {item.windBearing}&#176;
                             <br /><span className="sub-item-desc">Direction</span>
-                        </p>
+                        </p> */}
                     </div>
                     <div>
-                        <h6>Other:</h6>
+                        <p>Other:</p>
                         <p></p>
                         <p>
                             {toPercent(item.cloudCover)}%

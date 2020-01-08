@@ -6,7 +6,11 @@ class PieChart extends Component {
 			'#43A19E', '#7B43A1', '#F2317A', '#FF9824', '#58CF6C'
 		],
 		startAngle: 270,
-		stroke: '#0000'
+		stroke: '#0000',
+		strokeWidth: 1,
+		radius: 100,
+		animate: true,
+		hole: 55
 	}
 
 	componentDidMount() {
@@ -23,14 +27,15 @@ class PieChart extends Component {
 
 			<Pie
 				data={ this.props.data }
-				radius={ 100 }
-				hole={ 55 }
+				radius={ this.props.radius }
+				hole={ this.props.hole }
 				colors={ this.props.colors }
-				strokeWidth={ 1 }
+				strokeWidth={ this.props.strokeWidth }
 				stroke={this.props.stroke}
 				content={this.props.content}
 				fill={'#fff'}
 				startAngle={this.props.startAngle}
+				animate={this.props.animate}
 			/>
 
 		</div>
