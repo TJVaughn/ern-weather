@@ -34,7 +34,7 @@ class Weather extends Component {
             loading: '',
             alertContentSwitch: false,
             isNightTime: false,
-            nightModeClass: ''
+            nightModeClass: 'App'
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -45,7 +45,7 @@ class Weather extends Component {
         if(sunset < current || current < sunrise){
             this.setState({isNightTime: true, nightModeClass: 'Night-mode'})
         } else {
-            this.setState({isNightTime: false, nightModeClass: ''})
+            this.setState({isNightTime: false, nightModeClass: 'App'})
         }
     }
     handleGetWeather(searchTerm){
@@ -112,19 +112,21 @@ class Weather extends Component {
     
     render(){
     	return(
-    		<div className={`${this.state.nightModeClass} App`}>
+    		<div className={`${this.state.nightModeClass}`}>
                 <div className="Margin-div">
-                    <h2>Whether App</h2>
-                    <p className="sub-item-desc">
-                        Find out whether you want to go outside or not
-                    </p>
+                    <div className="Weather-Header">
+                        <h2>Whether App</h2>
+                        <p className="sub-item-desc">
+                            Find out whether you want to go outside or not
+                        </p>
 
-                    {/* FORM TO HANDLE SEARCH INPUT */}
-                    <form onSubmit={this.handleSubmit}>
-                        <label>Location: </label>
-                        <input value={this.state.input} onChange={this.handleChange} />
-                        <button>Get</button>
-                    </form>
+                        {/* FORM TO HANDLE SEARCH INPUT */}
+                        <form onSubmit={this.handleSubmit}>
+                            <label>Location: </label>
+                            <input value={this.state.input} onChange={this.handleChange} />
+                            <button id="Get-weather">Get</button>
+                        </form>
+                    </div>
                 <div>
                     {/* IF ERROR SWITCH IS TRUE, THE FORMER TEXT IS DISPLAYED */}
                     {this.state.errorSwitch 

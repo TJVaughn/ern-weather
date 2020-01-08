@@ -1,4 +1,15 @@
-
+.Weather-Header {
+    margin: 10px auto;
+    background: linear-gradient(30deg, #4ab, rgb(155, 81, 240));
+    border-radius: 5px;
+    padding: 5px;
+    width: max-content;
+    box-shadow: #333 4px 4px 6px;
+}
+#Get-weather{
+    color: #fff;
+    background: repeating-linear-gradient(45deg, #4ab, rgb(155, 81, 240) 2%);
+}
 .Weather-location{
     font-size: 1.1em;
     margin: 10px 5px;
