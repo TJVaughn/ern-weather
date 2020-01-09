@@ -83,6 +83,10 @@ class TodayComp extends Component {
         return timeToMidnightAfterSet + timeFromMidnightBeforeRise;
     }
 
+    componentDidMount(){
+        this.handleDayOrNight()
+    }
+
     render(){
     	return(
     		<div>
