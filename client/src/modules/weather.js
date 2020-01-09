@@ -170,11 +170,28 @@ class Weather extends Component {
 
 
                             <h3 className="align-center">This Week:</h3>
-                            <div className="This-week-map-container">
-                                {thisWeekMap}
+                            <div className="This-week-content-container">
+                                <div className="This-week-key">
+                                    <p>Day</p>
+                                    <p>Summary</p>
+                                    <p></p>
+                                    <p>High</p>
+                                    <p>Low</p>
+                                    <p>Sunrise</p>
+                                    <p>Sunset</p>
+                                    <p>Precip</p>
+                                    <p>Chance</p>
+                                    <p>Wind</p>
+                                    <p>Gust</p>
+                                    <p>Cloud %</p>
+                                    <p>Pressure</p>
+                                    <p>Humidity</p>
+                                </div>
+                                <div className="This-week-map-container">
+                                    {thisWeekMap}
+                                </div>
                             </div>
-
-                            <div className="Margin-bottom-50"></div>
+                            {/* <div className="Margin-bottom-50"></div> */}
                             
                         </div>
                     :<div className="Loading">
@@ -183,7 +200,10 @@ class Weather extends Component {
                     </div>
                 </div>
                 <Footer />
+                {/* <div className="Margin-bottom-50"></div><div className="Margin-bottom-50"></div> */}
+
                 </div>
+                
     		</div>
     	);
     }

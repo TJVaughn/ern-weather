@@ -32,7 +32,7 @@ class Footer extends Component {
                             that's it! <button>Accept</button>
                     </div>
                     :''}
-                    {/* <div className="Margin-bottom-50"></div> */}
+                    
     		</div>
     	);
     }
