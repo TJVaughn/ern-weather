@@ -1,6 +1,6 @@
 import React from 'react'
 import { toPercent } from './utils'
-import PieChart from './today/PieChart'
+import PieChart from './Piechart/PieChart'
 
 let thisWeekMap = []
    

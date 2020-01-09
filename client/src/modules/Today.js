@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { toPercent } from './utils'
-import PieChart from './today/PieChart'
+import PieChart from './Piechart/PieChart'
 
 // currDay = 
 const currTime = new Date()
@@ -86,6 +86,9 @@ class TodayComp extends Component {
     componentDidMount(){
         this.handleDayOrNight()
     }
+    componentWillUnmount(){
+        
+    }
 
     render(){
     	return(
@@ -169,7 +172,7 @@ class TodayComp extends Component {
                         {this.state.isDayTime
                         ? <PieChart 
                             data={[this.nightTime(), this.timeFromSunrise(), this.timeToSunset()]}
-                            startAngle={340}
+                            startAngle={0}
                             stroke={'#12d1b8'}
                             colors={['#0004', '#fff5', '#fff5']}
                             strokeWidth={2}
@@ -182,9 +185,9 @@ class TodayComp extends Component {
                             this.nightTime()- this.timeFromSunset(),
                             this.dayTime()
                         ]}
-                            startAngle={340}
+                            startAngle={0}
                             stroke={'#12d1b8'}
-                            colors={['#0004', '#fff5', '#fff5']}
+                            colors={['#0004', '#0004', '#fff5']}
                             strokeWidth={2}
                         />
                         : ''}
@@ -194,9 +197,9 @@ class TodayComp extends Component {
                             this.timeToSunrise(),
                             this.dayTime()
                     ]}
-                        startAngle={340}
+                        startAngle={0}
                         stroke={'#12d1b8'}
-                        colors={['#0004', '#fff5', '#fff5']}
+                        colors={['#0004', '#0004', '#fff5']}
                         strokeWidth={2}
                     />
                         : ''}
