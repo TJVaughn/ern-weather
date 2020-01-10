@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { toPercent } from './utils'
 import PieChart from './Piechart/PieChart'
-import LazyLoad from 'react-lazyload'
 
 // currDay = 
 const currTime = new Date()
@@ -127,7 +126,6 @@ class TodayComp extends Component {
                             colors={['#12d1b855', "#fff0"]}
                         />
                     </div>
-                    <LazyLoad height={100} offset={-100}>
                         <h3 className='align-center'>Wind</h3>
                         {/* <p className="align-center">MPH</p> */}
                         <div>
@@ -159,7 +157,6 @@ class TodayComp extends Component {
                                 </div>
                             </div>}
                         </div>
-                    </LazyLoad>
                     
                         <h3 className="align-center">Circadian</h3>
                         <div className="Weather-today-circadian sunrise-sunset">

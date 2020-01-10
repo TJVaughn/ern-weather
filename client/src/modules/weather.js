@@ -158,7 +158,7 @@ class Weather extends Component {
                             
                             <TodayComp />
 
-                            <LazyLoad height={100} offset={-100}>
+                            <LazyLoad height={100} offset={-50}>
                                 <h3 className="align-center">
                                     Hourly:
                                 </h3>
@@ -170,7 +170,7 @@ class Weather extends Component {
                                     </div>
                                 </div>
                             </LazyLoad>
-                            <LazyLoad height={100} offset={-100}>
+                            <LazyLoad height={100} offset={-50}>
                                 <h3 className="align-center">This Week:</h3>
                                 <div className="This-week-content-container fade-in">
                                     <div className="This-week-key fade-in">
@@ -202,7 +202,7 @@ class Weather extends Component {
                     </div>}
                     </div>
                 </div>
-                <div className="Margin-bottom-100">
+                <div className="Padding-bottom-100">
                     {'<3'}
                 </div>
                 
