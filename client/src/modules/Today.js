@@ -160,7 +160,7 @@ class TodayComp extends Component {
                             </div>}
                         </div>
                     </LazyLoad>
-                    <LazyLoad height={100} offset={-100}>
+                    
                         <h3 className="align-center">Circadian</h3>
                         <div className="Weather-today-circadian sunrise-sunset">
                             <p>
@@ -211,7 +211,7 @@ class TodayComp extends Component {
                         
                         
                         </div>
-                    </LazyLoad>
+                    
 
                     <h3 className="align-center">Other:</h3>
                     <div className="Weather-today-other">
