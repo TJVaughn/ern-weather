@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { toPercent } from './utils'
 import PieChart from './Piechart/PieChart'
+import LazyLoad from 'react-lazyload'
 
 // currDay = 
 const currTime = new Date()
@@ -126,87 +127,88 @@ class TodayComp extends Component {
                             colors={['#12d1b8', "#fff0"]}
                         />
                     </div>
+                    <LazyLoad height={100} offset={-100}>
+                        <h3 className='align-center'>Wind</h3>
+                        {/* <p className="align-center">MPH</p> */}
+                        <p className="align-center">
+                            click or tap
+                        </p>
                         
-                    <h3 className='align-center'>Wind</h3>
-                    {/* <p className="align-center">MPH</p> */}
-                    <p className="align-center">
-                        click or tap
-                    </p>
-                    
-                    <div onClick={this.handleClick}>
-                        {this.state.wind
-                        ? <div className="Weather-today-pie-outer">
-                            <div> 
-                                <PieChart 
-                                    content={`Speed: \n${today.windSpeed.toFixed(0)} mph`}
-                                    data={[(today.windBearing / 360 * 100) - 1, 1, 98 - (today.windBearing / 360 * 100)]}
-                                    colors={['#fff0', '#12d1b8', '#fff0']}
-                                    
-                                />
+                        <div onClick={this.handleClick}>
+                            {this.state.wind
+                            ? <div className="Weather-today-pie-outer">
+                                <div> 
+                                    <PieChart 
+                                        content={`Speed: \n${today.windSpeed.toFixed(0)} mph`}
+                                        data={[(today.windBearing / 360 * 100) - 1, 1, 98 - (today.windBearing / 360 * 100)]}
+                                        colors={['#fff0', '#12d1b8', '#fff0']}
+                                        
+                                    />
+                                </div>
                             </div>
+                            : <div className="Weather-today-pie-outer">    
+                                <div> 
+                                    <PieChart 
+                                        content={"Gust: \n" + today.windGust.toFixed(0) + 'mph'}
+                                        data={[(today.windBearing / 360 * 100) - 1, 1, 98 - (today.windBearing / 360 * 100)]}
+                                        colors={['#fff0', '#12d1b8', '#fff0']}
+                                    />
+                                </div>
+                            </div>}
                         </div>
-                        : <div className="Weather-today-pie-outer">    
-                            <div> 
-                                <PieChart 
-                                    content={"Gust: \n" + today.windGust.toFixed(0) + 'mph'}
-                                    data={[(today.windBearing / 360 * 100) - 1, 1, 98 - (today.windBearing / 360 * 100)]}
-                                    colors={['#fff0', '#12d1b8', '#fff0']}
-                                />
-                            </div>
-                        </div>}
-                    </div>
+                    </LazyLoad>
+                    <LazyLoad height={100} offset={-100}>
+                        <h3 className="align-center">Circadian</h3>
+                        <div className="Weather-today-circadian sunrise-sunset">
+                            <p>
+                                {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                <br /><span className="sub-item-desc">Sunrise</span>
+                            </p>
+                            <p>
+                                {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
+                                <br /><span className="sub-item-desc">Sunset</span>
+                            </p>
+                        </div>
+                        <div className="Weather-today-circadian">
 
-                    <h3 className="align-center">Circadian</h3>
-                    <div className="Weather-today-circadian sunrise-sunset">
-                        <p>
-                            {new Date(today.sunriseTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                            <br /><span className="sub-item-desc">Sunrise</span>
-                        </p>
-                        <p>
-                            {new Date(today.sunsetTime * 1000).toLocaleTimeString((navigator.language), {hour: '2-digit', minute: '2-digit'})}
-                            <br /><span className="sub-item-desc">Sunset</span>
-                        </p>
-                    </div>
-                    <div className="Weather-today-circadian">
-
-                        {this.state.isDayTime
-                        ? <PieChart 
-                            data={[this.nightTime(), this.timeFromSunrise(), this.timeToSunset()]}
-                            startAngle={0}
-                            stroke={'#12d1b8'}
-                            colors={['#0004', '#fff5', '#fff5']}
-                            strokeWidth={2}
-                        />
-                        : ''
-                        }
-                        {this.state.isAfterSunset
-                        ? <PieChart 
-                            data={[this.timeFromSunset(), 
-                            this.nightTime()- this.timeFromSunset(),
-                            this.dayTime()
+                            {this.state.isDayTime
+                            ? <PieChart 
+                                data={[this.nightTime(), this.timeFromSunrise(), this.timeToSunset()]}
+                                startAngle={0}
+                                stroke={'#12d1b8'}
+                                colors={['#0004', '#fff5', '#fff5']}
+                                strokeWidth={2}
+                            />
+                            : ''
+                            }
+                            {this.state.isAfterSunset
+                            ? <PieChart 
+                                data={[this.timeFromSunset(), 
+                                this.nightTime()- this.timeFromSunset(),
+                                this.dayTime()
+                            ]}
+                                startAngle={0}
+                                stroke={'#12d1b8'}
+                                colors={['#0004', '#0004', '#fff5']}
+                                strokeWidth={2}
+                            />
+                            : ''}
+                            {this.state.isBeforeSunrise
+                            ? <PieChart 
+                            data={[ this.nightTime() - this.timeToSunrise(),
+                                this.timeToSunrise(),
+                                this.dayTime()
                         ]}
                             startAngle={0}
                             stroke={'#12d1b8'}
                             colors={['#0004', '#0004', '#fff5']}
                             strokeWidth={2}
                         />
-                        : ''}
-                        {this.state.isBeforeSunrise
-                        ? <PieChart 
-                        data={[ this.nightTime() - this.timeToSunrise(),
-                            this.timeToSunrise(),
-                            this.dayTime()
-                    ]}
-                        startAngle={0}
-                        stroke={'#12d1b8'}
-                        colors={['#0004', '#0004', '#fff5']}
-                        strokeWidth={2}
-                    />
-                        : ''}
-                    
-                       
-                    </div>
-                    
+                            : ''}
+                        
+                        
+                        </div>
+                    </LazyLoad>
 
                     <h3 className="align-center">Other:</h3>
                     <div className="Weather-today-other">

@@ -1,5 +1,5 @@
 .This-week-content-container {
-    padding: 20px 0;
+    padding: 20px 0 0 0;
     border: 1px solid #ffffff00;
     border-radius: 5px;
     box-shadow: #333 4px 4px 6px;
@@ -26,7 +26,7 @@
         font-size: 0.8em;
     }
     // @media only screen and(max-width: 550px){
-        grid-template-columns: repeat(8, 90%);
+        grid-template-columns: repeat(8, 70%);
         grid-template-rows: repeat(13, 40px);
         
     // }

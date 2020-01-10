@@ -13,13 +13,13 @@ class PieChart extends Component {
 		hole: 55
 	}
 
-	// componentDidMount() {
-	// 	setInterval(function () {
-	// 		let data = this.props.data
-	// 		this.setState({ data });
+	componentDidMount() {
+		setInterval(function () {
+			let data = this.props.data
+			this.setState({ data });
 
-	// 	}.bind(this), 5000);
-	// }
+		}.bind(this), 5000);
+	}
 
 	render() {
 		return (
