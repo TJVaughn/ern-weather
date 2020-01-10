@@ -21,18 +21,6 @@ const forceSSLAndWWW = (req, res, next) => {
             return res.redirect(301, 'https://www.whetherapp.co')
         }
     }
-
-    // if(process.env.NODE_ENV === 'production' && req.header('host') !== 'www.whetherapp.co'){
-    //     res.redirect(301, 'https://www.whetherapp.co')
-    // }
-
-    // if(process.env.NODE_ENV === 'production' && req.header('x-forwarded-proto') !== 'https'){
-    //     console.log(req.hostname)
-    //     console.log(req.url)
-    //     // return res.redirect(301, 'https://' + req.hostname)
-    //     return res.redirect(301, `https://${req.header('host')}`)
-    // }
-
     return next();
 }
 app.use(forceSSLAndWWW)

@@ -13,7 +13,10 @@ class PieChart extends Component {
 		hole: 55
 	}
 
-	componentDidMount() {
+	// componentDidMount() {
+		
+	// }
+	onLoad(){
 		setInterval(function () {
 			let data = this.props.data
 			this.setState({ data });
@@ -23,7 +26,7 @@ class PieChart extends Component {
 
 	render() {
 		return (
-		  <div>
+		  <div >
 
 			<Pie
 				data={ this.props.data }
@@ -37,7 +40,7 @@ class PieChart extends Component {
 				startAngle={this.props.startAngle}
 				animate={this.props.animate}
 			/>
-
+{/* {this.onLoad()} */}
 		</div>
 		);
 	}

@@ -202,12 +202,12 @@ class Weather extends Component {
                     </div>}
                     </div>
                 </div>
-                <div>
-                    Thanks for checking this out!
+                <div className="Margin-bottom-100">
+                    {'<3'}
                 </div>
                 
                 <Footer />
-                <div className="Margin-bottom-50"></div>
+                <div></div>
 
                 </div>
                 

@@ -124,15 +124,18 @@ class TodayComp extends Component {
                         <PieChart 
                             content={toPercent(today.precipProbability) + '%'}
                             data={[toPercent(today.precipProbability), 100 - toPercent(today.precipProbability)]}
-                            colors={['#12d1b8', "#fff0"]}
+                            colors={['#12d1b855', "#fff0"]}
                         />
                     </div>
                     <LazyLoad height={100} offset={-100}>
                         <h3 className='align-center'>Wind</h3>
                         {/* <p className="align-center">MPH</p> */}
-                        <p className="align-center">
-                            click or tap
-                        </p>
+                        <div>
+                            <p className="align-center" style={{color: "#888"}}>
+                                click or tap
+                            </p>
+                        </div>
+                        
                         
                         <div onClick={this.handleClick}>
                             {this.state.wind
@@ -141,7 +144,7 @@ class TodayComp extends Component {
                                     <PieChart 
                                         content={`Speed: \n${today.windSpeed.toFixed(0)} mph`}
                                         data={[(today.windBearing / 360 * 100) - 1, 1, 98 - (today.windBearing / 360 * 100)]}
-                                        colors={['#fff0', '#12d1b8', '#fff0']}
+                                        colors={['#fff0', '#12d1b866', '#fff0']}
                                         
                                     />
                                 </div>

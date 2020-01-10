@@ -39,9 +39,9 @@ class Slice extends Component {
     //     }, 500)
     // }
 	
-	componentDidMount() {
-		this.animate();
-	}
+	// componentDidMount() {
+	// 	this.animate();
+	// }
 	animate() {
 		this.draw(0);
 	}
