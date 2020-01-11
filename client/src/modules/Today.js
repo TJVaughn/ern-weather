@@ -85,6 +85,12 @@ class TodayComp extends Component {
 
     componentDidMount(){
         this.handleDayOrNight()
+        setInterval(() => {
+            if(this.state.wind){
+                return this.setState({wind: false})
+            }
+            this.setState({wind: true})
+        }, 5000)
     }
     componentWillUnmount(){
         
