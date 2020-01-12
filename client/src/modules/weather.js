@@ -7,7 +7,7 @@ import { setSearchCookie, getSearchCookie } from './cookies'
 import { handleToday, TodayComp } from './Today'
 import Footer from './Footer'
 import ReactGA from 'react-ga';
-import LazyLoad from 'react-lazyload'
+// import LazyLoad from 'react-lazyload'
 
 ReactGA.initialize('UA-136509113-9');
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -158,7 +158,7 @@ class Weather extends Component {
                             
                             <TodayComp />
 
-                            <LazyLoad height={100} offset={-50}>
+                            {/* <LazyLoad height={100} offset={-50}> */}
                                 <h3 className="align-center">
                                     Hourly:
                                 </h3>
@@ -169,8 +169,8 @@ class Weather extends Component {
                                         {hourlyMap}
                                     </div>
                                 </div>
-                            </LazyLoad>
-                            <LazyLoad height={100} offset={-50}>
+                            {/* </LazyLoad> */}
+                            {/* <LazyLoad height={100} offset={-50}> */}
                                 <h3 className="align-center">This Week:</h3>
                                 <div className="This-week-content-container fade-in">
                                     <div className="This-week-key fade-in">
@@ -193,7 +193,7 @@ class Weather extends Component {
                                         {thisWeekMap}
                                     </div>
                                 </div>
-                            </LazyLoad>
+                            {/* </LazyLoad> */}
                             {/* <div className="Margin-bottom-50"></div> */}
                             
                         </div>
