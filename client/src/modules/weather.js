@@ -57,6 +57,7 @@ class Weather extends Component {
             // Set error to true ...
             this.setState({errorSwitch: true})
             weatherArray = res;
+            console.log(weatherArray)
             curr = weatherArray.forecast.currently;
             dayArray = weatherArray.forecast.daily.data;
             hourlyArray = weatherArray.forecast.hourly.data;
@@ -75,6 +76,9 @@ class Weather extends Component {
             todaySunsetTime = new Date(today.sunsetTime * 1000)
             todaySunriseTime = new Date(today.sunriseTime * 1000)
             this.dayOrNight(todaySunsetTime, todaySunriseTime, todayCurrentTime);
+            if(todayCurrentTime > weatherArray.forecast.currently.time * 1000 * 60 * 30){
+                window.location.reload(true)
+            }
             this.setState({error: res.error})
             // We will remove the loading message
             this.setState({loading: ''})
@@ -109,6 +113,7 @@ class Weather extends Component {
             return '';
         }
         this.handleGetWeather(userSearchCookie);
+        
     }
     
     render(){
